@@ -2,7 +2,9 @@
   "name": "server",
   "version": "1.0.0",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "server": "nodemon app.js",
+    "db": "mongod --dbpath mongodb/data/db/"
   },
   "dependencies": {
     "@casl/ability": "5.4.3",
@@ -10,7 +12,9 @@
     "express": "4.17.1",
     "bcryptjs": "2.4.3",
     "jsonwebtoken": "8.5.1",
-    "mongoose": "6.0.7"
+    "mongoose": "6.0.7",
+    "config": "3.3.6",
+    "express-validator": "6.12.1"
   },
   "devDependencies": {
     "concurrently": "^5.2.0",
