@@ -2,13 +2,16 @@ const {Schema, model} = require('mongoose');
 
 const schema = new Schema({
     taskId: {
-        type: String
+        type: String,
+        required: true
     },
     text: {
-        type: String
+        type: String,
+        required: true
     },
     author: {
-        type: String
+        type: String,
+        required: true
     },
     created: {
         type: Date,
