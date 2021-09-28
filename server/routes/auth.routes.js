@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const config = require('config');
+const {jwtSecret} = require('../config')
 const {check, validationResult} = require('express-validator');
 const User = require('../models/User');
 const router = Router();
@@ -24,8 +24,6 @@ router.post(
                     message: 'Incorrect data'
                 })
             }
-
-            console.log(req.body);
             const {email, password, name} = req.body;
 
             const candidate = await User.findOne({email});
@@ -40,12 +38,13 @@ router.post(
 
             const token = jwt.sign(
                 {userId: user._id},
-                config.get('jwtSecret'),
+                jwtSecret,
                 {expiresIn: '24h'}
             );
 
             res.status(201).json({accessToken: token, userId: user._id, name, role: user.role, message: 'Registered successful'});
         } catch (err) {
+            console.log(err);
             res.status(500).json({
                 message: 'Something went wrong...'
             });
@@ -83,7 +82,7 @@ router.post(
 
             const token = jwt.sign(
                 {userId: user.id, role: user.role, balance: user.balance},
-                config.get('jwtSecret'),
+                jwtSecret,
                 {expiresIn: '1h'}
             );
 

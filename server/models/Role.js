@@ -28,4 +28,4 @@ const schema = new Schema({
     },
 });
 
-module.exports = model('Role', schema);
+module.exports = {Role: model('Role', schema), schemaRole: schema};

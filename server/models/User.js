@@ -1,4 +1,5 @@
 const {Schema, model} = require('mongoose');
+const {schemaRole} = require('./Role')
 
 const schema = new Schema({
     email: {
@@ -11,9 +12,7 @@ const schema = new Schema({
         required: true
     },
     role: {
-        type: Number,
-        required: true,
-        default: 'registered'
+        type: schemaRole,
     },
     name: {
         type: String,
@@ -21,7 +20,8 @@ const schema = new Schema({
     },
     regDate: {
         type: Date,
-        required: true
+        required: true,
+        default: Date.now()
     }
 });
 
