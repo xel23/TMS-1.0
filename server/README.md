@@ -41,3 +41,26 @@ Response:
     role: [userRole]
 }
 ```
+
+## User
+### Grant role
+Endpoint: `/api/user/:userId/grant-role` \
+Method: `POST` \
+Headers:
+```
+{
+    Autorization: [AuthToken]
+}
+```
+Body:
+```
+{
+    role: [roleName]
+}
+```
+Response:
+```
+{
+    message: [responseMessage]
+}
+```

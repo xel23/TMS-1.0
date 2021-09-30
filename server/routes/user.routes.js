@@ -31,7 +31,7 @@ router.post('/:id/grant-role',
 
                 if (req.ability.can('update', user)) {
                     await user.save();
-                    return res.status(201).json('User updated successfully');
+                    return res.status(201).json({message: 'User updated successfully'});
                 }
                 return res.status(403).json('Forbidden');
             } else {
