@@ -42,6 +42,24 @@ Response:
 }
 ```
 
+## Task
+### Get task
+Endpoint: `/api/task/:taskId` \
+Method: `GET` \
+Headers:
+```
+{
+    Autorization: [AuthToken]
+}
+```
+Response:
+```
+{
+    [Task]
+}
+```
+
+
 ## User
 ### Grant role
 Endpoint: `/api/user/:userId/grant-role` \

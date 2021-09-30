@@ -6,7 +6,7 @@ const Task = require('../models/Task');
 const auth = require('../middleware/auth.middleware');
 const router = Router();
 
-router.get('/task/:id',
+router.get('/:id',
     auth,
     async (req, res) => {
         try {
