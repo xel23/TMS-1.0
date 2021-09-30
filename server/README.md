@@ -1,5 +1,6 @@
 # API Schema
-## Auth
+<details>
+    <summary>## Auth</summary>
 ### Registration
 Endpoint: `/api/auth/register` \
 Method: `POST` \
@@ -41,3 +42,4 @@ Response:
     role: [userRole]
 }
 ```
+</details>
