@@ -1,4 +1,4 @@
-#API Schema
+# API Schema
 ## Auth
 ### Registration
 Endpoint: `/api/auth/register` \
