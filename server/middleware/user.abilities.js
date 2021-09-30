@@ -16,7 +16,7 @@ function defineAbilitiesFor(user) {
     }
 
     if (user.role.updateUser) {
-        can('create', ['User']);
+        can('update', ['User']);
     }
 
     if (user.role.deleteUser) {

@@ -12,7 +12,7 @@ function defineAbilitiesFor(user) {
     }
 
     if (user.role.updateTask) {
-        can('create', ['Task']);
+        can('update', ['Task']);
     }
 
     if (user.role.deleteTask) {
