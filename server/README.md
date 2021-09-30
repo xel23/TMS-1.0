@@ -7,7 +7,8 @@ Body:
 ```
 {
     email: [userEmail],
-    password: [userPassword]
+    password: [userPassword],
+    name: [userName]
 }
 ```
 Response:
@@ -18,5 +19,25 @@ Response:
     name: [userName], 
     role: [userRole], 
     message: [responseMessage]
+}
+```
+
+### Login
+Endpoint: `/api/auth/login` \
+Method: `POST` \
+Body:
+```
+{
+    email: [userEmail],
+    password: [userPassword]
+}
+```
+Response:
+```
+{
+    accessToken: [token],
+    userId: [userId],
+    name: [userName],
+    role: [userRole]
 }
 ```
