@@ -4,7 +4,7 @@
 Endpoint: `/api/auth/register` \
 Method: `POST` \
 Body: 
-```
+```json
 {
     email: string,
     password: string,
@@ -12,7 +12,7 @@ Body:
 }
 ```
 Response:
-```
+```json
 {
     accessToken: string, 
     userId: string, 
@@ -26,14 +26,14 @@ Response:
 Endpoint: `/api/auth/login` \
 Method: `POST` \
 Body:
-```
+```json
 {
     email: string,
     password: string
 }
 ```
 Response:
-```
+```json
 {
     accessToken: string,
     userId: string,
@@ -47,13 +47,13 @@ Response:
 Endpoint: `/api/tasks/:taskId` \
 Method: `GET` \
 Headers:
-```
+```json
 {
     Autorization: [AuthToken]
 }
 ```
 Response:
-```
+```json
 {
     task: Task
 }
@@ -63,13 +63,13 @@ Response:
 Endpoint: `/api/tasks/` \
 Method: `GET` \
 Headers:
-```
+```json
 {
     Autorization: [AuthToken]
 }
 ```
 Response:
-```
+```json
 {
     tasks: [Task]
 }
@@ -79,13 +79,13 @@ Response:
 Endpoint: `/api/tasks/` \
 Method: `POST` \
 Headers:
-```
+```json
 {
     Autorization: [AuthToken]
 }
 ```
 Body:
-```
+```json
 {
     summary: string,
     description: string | null,
@@ -97,7 +97,7 @@ Body:
 }
 ```
 Response:
-```
+```json
 {
     summary: string,
     description: string | null,
@@ -122,19 +122,19 @@ Response:
 Endpoint: `/api/users/:userId/grant-role` \
 Method: `POST` \
 Headers:
-```
+```json
 {
     Autorization: [AuthToken]
 }
 ```
 Body:
-```
+```json
 {
     role: string
 }
 ```
 Response:
-```
+```json
 {
     message: string
 }
