@@ -44,7 +44,7 @@ Response:
 
 ## Task
 ### Get task
-Endpoint: `/api/task/:taskId` \
+Endpoint: `/api/tasks/:taskId` \
 Method: `GET` \
 Headers:
 ```
@@ -55,14 +55,30 @@ Headers:
 Response:
 ```
 {
-    [Task]
+    task: [Task]
+}
+```
+
+### Get all tasks
+Endpoint: `/api/tasks/` \
+Method: `GET` \
+Headers:
+```
+{
+    Autorization: [AuthToken]
+}
+```
+Response:
+```
+{
+    tasks: [TaskArray]
 }
 ```
 
 
 ## User
 ### Grant role
-Endpoint: `/api/user/:userId/grant-role` \
+Endpoint: `/api/users/:userId/grant-role` \
 Method: `POST` \
 Headers:
 ```

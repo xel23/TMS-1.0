@@ -3,6 +3,10 @@ const { AbilityBuilder, Ability } = require('@casl/ability');
 function defineAbilitiesFor(user) {
     const { can, build } = new AbilityBuilder(Ability);
 
+    if (!user?.role) {
+        return build();
+    }
+
     if (user.role.readTask) {
         can('read', ['Task']);
     }
