@@ -1,2 +1,1 @@
-## Server
-1. run `npm run server`
+# TMS 1.0

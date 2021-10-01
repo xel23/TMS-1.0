@@ -1,3 +1,7 @@
+# Getting start
+## Start server
+1. run `npm run server`
+
 # API Schema
 ## Auth
 ### Registration
