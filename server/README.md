@@ -101,6 +101,10 @@ Response:
 {
     summary: string,
     description: string | null,
+    author: {
+        userId: string,
+        name: string
+    },
     assignee: string | null,
     type: string,
     priority: string,
