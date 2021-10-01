@@ -52,7 +52,9 @@ router.post('/',
                 return res.status(403).json('Forbidden');
             }
             const {summary, description, assignee, type, priority, subsystem, status} = req.body;
-            const task = new Task({summary, description, assignee, type, priority, subsystem, status});
+            const user = req.user;
+            const task = new Task({summary, description, assignee, type, priority, subsystem, status,
+                author: {name: user.name, userId: user.userId}});
             await task.save();
             return res.status(201).json({task});
         } catch (e) {

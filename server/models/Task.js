@@ -8,6 +8,13 @@ const schema = new Schema({
     description: {
         type: String
     },
+    author: {
+        type: {
+            name: String,
+            userId: String
+        },
+        required: true
+    },
     assignee: {
         type: String
     },

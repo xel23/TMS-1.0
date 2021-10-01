@@ -3,7 +3,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {jwtSecret} = require('../config')
 const {check, validationResult} = require('express-validator');
-const User = require('../models/User');
+const {User} = require('../models/User');
+const error = require("./services/error");
 const router = Router();
 
 router.post(
@@ -43,11 +44,8 @@ router.post(
             );
 
             res.status(201).json({accessToken: token, userId: user._id, name, role: user.role, message: 'Registered successful'});
-        } catch (err) {
-            console.log(err);
-            res.status(500).json({
-                message: 'Something went wrong...'
-            });
+        } catch (e) {
+            error(e, res);
         }
     });
 
@@ -81,7 +79,7 @@ router.post(
             }
 
             const token = jwt.sign(
-                {userId: user.id, role: user.role, balance: user.balance},
+                {userId: user.id, role: user.role, name: user.name},
                 jwtSecret,
                 {expiresIn: '24h'}
             );
@@ -89,9 +87,7 @@ router.post(
             res.status(200).json({accessToken: token, userId: user.id, name: user.name, role: user.role});
 
         } catch (e) {
-            res.status(500).json({
-                message: 'Something went wrong...'
-            });
+            error(e, res);
         }
 
     });
