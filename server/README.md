@@ -6,19 +6,19 @@ Method: `POST` \
 Body: 
 ```
 {
-    email: [userEmail],
-    password: [userPassword],
-    name: [userName]
+    email: string,
+    password: string,
+    name: string
 }
 ```
 Response:
 ```
 {
-    accessToken: [token], 
-    userId: [userId], 
-    name: [userName], 
-    role: [userRole], 
-    message: [responseMessage]
+    accessToken: string, 
+    userId: string, 
+    name: string, 
+    role: Role, 
+    message: string
 }
 ```
 
@@ -28,17 +28,17 @@ Method: `POST` \
 Body:
 ```
 {
-    email: [userEmail],
-    password: [userPassword]
+    email: string,
+    password: string
 }
 ```
 Response:
 ```
 {
-    accessToken: [token],
-    userId: [userId],
-    name: [userName],
-    role: [userRole]
+    accessToken: string,
+    userId: string,
+    name: string,
+    role: Role
 }
 ```
 
@@ -55,7 +55,7 @@ Headers:
 Response:
 ```
 {
-    task: [Task]
+    task: Task
 }
 ```
 
@@ -71,7 +71,44 @@ Headers:
 Response:
 ```
 {
-    tasks: [TaskArray]
+    tasks: [Task]
+}
+```
+
+### Create task
+Endpoint: `/api/tasks/` \
+Method: `POST` \
+Headers:
+```
+{
+    Autorization: [AuthToken]
+}
+```
+Body:
+```
+{
+    summary: string,
+    description: string | null,
+    assignee: string | null,
+    type: string,
+    priority: string,
+    subsystem: string | null,
+    status: string
+}
+```
+Response:
+```
+{
+    summary: string,
+    description: string | null,
+    assignee: string | null,
+    type: string,
+    priority: string,
+    subsystem: string | null,
+    status: string,
+    created: Date,
+    updated: Date | null,
+    verifiedBy: string | null
 }
 ```
 
@@ -89,12 +126,12 @@ Headers:
 Body:
 ```
 {
-    role: [roleName]
+    role: string
 }
 ```
 Response:
 ```
 {
-    message: [responseMessage]
+    message: string
 }
 ```

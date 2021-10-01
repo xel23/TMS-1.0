@@ -28,6 +28,38 @@ router.get('/:id',
     }
 );
 
+router.post('/',
+    auth,
+    abilities,
+    [
+        check('summary', 'Summary error').exists().isString(),
+        check('type', 'Task type error').exists().isString(),
+        check('priority', 'Priority error').exists().isString(),
+        check('status', 'Task status error').exists().isString()
+    ],
+    async (req, res) => {
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                console.log(errors);
+                return res.status(400).json({
+                    errors: errors[0],
+                    message: 'Incorrect request'
+                })
+            }
+
+            if (!req.ability.can('create', 'Task')) {
+                return res.status(403).json('Forbidden');
+            }
+            const {summary, description, assignee, type, priority, subsystem, status} = req.body;
+            const task = new Task({summary, description, assignee, type, priority, subsystem, status});
+            await task.save();
+            return res.status(201).json({task});
+        } catch (e) {
+            error(e, res);
+        }
+    });
+
 router.get('/',
     auth,
     abilities,
