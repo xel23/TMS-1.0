@@ -6,7 +6,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import CreateIcon from '@material-ui/icons/Create';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { Wrapper, Container, ContainerRight, ContainerLeft, ContainerIcons, Status, Priority, Author } from "./Task.styles";
+import { Wrapper, Container, ContainerRight, ContainerLeft, ContainerIcons, Status, Priority, Author } from './Task.styles';
 
 export interface TaskProps {
     id: string;

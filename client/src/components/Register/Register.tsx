@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
-import { Wrapper, ButtonWrapper, FieldName, ButtonName, Error, useTextFieldStyles } from "./Register.styles";
+import { Wrapper, ButtonWrapper, FieldName, ButtonName, Error, useTextFieldStyles } from './Register.styles';
 
 interface RegisterProps {
     register: (name: string, email: string, password: string) => void;
