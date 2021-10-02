@@ -47,6 +47,28 @@ Response:
 ```
 
 ## Task
+### Task entity
+```
+    summary: string,
+    description: string | null,
+    author: {
+        userId: string,
+        name: string
+    },
+    assignee: string | null,
+    type: string,
+    priority: string,
+    subsystem: string | null,
+    status: string,
+    created: Date,
+    updated: Date | null,
+    updatedBy: {
+        userId: string,
+        name: string
+    },
+    verifiedBy: string | null
+```
+
 ### Get task
 Endpoint: `/api/tasks/:taskId` \
 Method: `GET` \
@@ -103,20 +125,36 @@ Body:
 Response:
 ```
 {
-    summary: string,
+    task: Task
+}
+```
+
+### Update task
+Endpoint: `/api/tasks/:id` \
+Method: `POST` \
+Headers:
+```
+{
+    Autorization: [AuthToken]
+}
+```
+Body:
+```
+{
+    summary: string | null,
     description: string | null,
-    author: {
-        userId: string,
-        name: string
-    },
     assignee: string | null,
-    type: string,
-    priority: string,
+    type: string | null,
+    priority: string | null,
     subsystem: string | null,
-    status: string,
-    created: Date,
-    updated: Date | null,
+    status: string | null,
     verifiedBy: string | null
+}
+```
+Response:
+```
+{
+    task: Task
 }
 ```
 
