@@ -129,6 +129,22 @@ Response:
 }
 ```
 
+### Delete task
+Endpoint: `/api/tasks/:id` \
+Method: `DELETE` \
+Headers:
+```
+{
+    Autorization: [AuthToken]
+}
+```
+Response:
+```
+{
+    task: Task
+}
+```
+
 ### Update task
 Endpoint: `/api/tasks/:id` \
 Method: `POST` \

@@ -6,6 +6,28 @@ const auth = require('../middleware/auth.middleware');
 const abilities = require('../middleware/task.abilities');
 const router = Router();
 
+router.delete('/:id',
+    auth,
+    abilities,
+    async (req, res) => {
+        try {
+            const taskId = req.params.id;
+            const task = await Task.findOne({_id: taskId});
+            if (!task) {
+                return res.status(404).json('Not found');
+            }
+
+            if (!req.ability.can('delete', task)) {
+                return res.status(403).json('Forbidden');
+            }
+
+            await Task.deleteOne({_id: taskId});
+            return res.status(201).json({task});
+        } catch (e) {
+            error(e, res);
+        }
+    });
+
 router.post('/:id',
     auth,
     abilities,
@@ -28,11 +50,12 @@ router.post('/:id',
             const taskId = req.params.id;
             const task = await Task.findOne({_id: taskId});
 
-            if (!req.ability.can('update', task)) {
-                return res.status(403).json('Forbidden');
-            }
             if (!task) {
                 return res.status(404).json('Not found');
+            }
+
+            if (!req.ability.can('update', task)) {
+                return res.status(403).json('Forbidden');
             }
 
             let changedSomething = false;
