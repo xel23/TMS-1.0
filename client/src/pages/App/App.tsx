@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Header from '../../components/Header/Header';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import LoginPage from '../LoginPage/LoginPage';
 import TasksPage from '../TasksPage/TasksPage';
 
 import { Wrapper } from './App.styles';
@@ -14,7 +15,7 @@ const App: React.FunctionComponent = () => {
                 <Header />
                 <Switch>
                     <Route path="/register" component={() => <RegisterPage />} />
-                    <Route path="/login">Login page</Route>
+                    <Route path="/login" component={() => <LoginPage />} />
                     <Route path="/dashboard">Dashboard page</Route>
                     <Route exact path="/tasks" component={() => <TasksPage />} />
                     <Route path="/tasks/:taskId">Task page</Route>
