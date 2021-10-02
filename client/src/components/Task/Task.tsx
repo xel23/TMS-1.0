@@ -29,7 +29,9 @@ export interface TaskProps {
 const Task: React.FunctionComponent<TaskProps> = (props) => {
     return (
         <Wrapper>
-            <div>{props.summary}</div>
+            <Link to={`tasks/${props.id}`}>
+                <div>{props.summary}</div>
+            </Link>
             <Container>
                 <ContainerRight>
                     <Status className={props.status.toLowerCase().replace(' ', '-')}>
