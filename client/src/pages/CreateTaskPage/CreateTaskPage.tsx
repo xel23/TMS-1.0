@@ -6,7 +6,7 @@ import { createTaskRequest } from '../../requests';
 import { DataContext } from '../../context';
 
 const CreateTaskPage: React.FunctionComponent = () => {
-    const { token } = useContext(DataContext);
+    const { token, setNotification } = useContext(DataContext);
 
     const history = useHistory();
 
@@ -27,9 +27,13 @@ const CreateTaskPage: React.FunctionComponent = () => {
             priority: priority,
             subsystem: subsystem,
             status: status
-        }, token).then(() => {
-            history.push('/tasks');
-        })
+        }, token)
+            .then(() => {
+                history.push('/tasks');
+            })
+            .catch((error) => {
+                setNotification({ isOpen: true, status: error.response.status, message: error.response.data })
+            })
     };
 
     return <CreateTask

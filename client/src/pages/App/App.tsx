@@ -6,6 +6,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import LoginPage from '../LoginPage/LoginPage';
 import TasksPage from '../TasksPage/TasksPage';
 import CreateTaskPage from '../CreateTaskPage/CreateTaskPage';
+import Notification from '../../components/Notification/Notification';
 
 import { DataContext, DataContextProvider } from '../../context';
 
@@ -40,6 +41,7 @@ const App: React.FunctionComponent = () => {
                         <Route path="/edit_task/:taskId">Edit task page</Route>
                         <Route path="/archive">Archive page</Route>
                     </Switch>
+                    <Notification />
                 </BrowserRouter>
             </Wrapper>
         </DataContextProvider>

@@ -10,7 +10,7 @@ import { getTasksRequest, deleteTaskRequest } from '../../requests';
 import { Wrapper, ButtonName } from './TasksPage.styles';
 
 const TasksPage: React.FunctionComponent = () => {
-    const { token } = useContext(DataContext);
+    const { token, setNotification } = useContext(DataContext);
     const [tasks, setTasks] = useState([]);
 
     const getTasks = () => {
@@ -22,7 +22,11 @@ const TasksPage: React.FunctionComponent = () => {
     };
 
     const deleteTask = (taskId: string) => {
-        deleteTaskRequest(taskId, token).then(() => getTasks())
+        deleteTaskRequest(taskId, token)
+            .then(() => getTasks())
+            .catch((error) => {
+                setNotification({ isOpen: true, status: error.response.status, message: error.response.data })
+            })
     };
 
     useEffect(() => {
