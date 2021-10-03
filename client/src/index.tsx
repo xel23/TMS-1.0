@@ -3,9 +3,13 @@ import ReactDOM from 'react-dom';
 
 import App from './pages/App/App';
 
+import { DataContextProvider } from './context';
+
 ReactDOM.render(
     <React.StrictMode>
-        <App />
+        <DataContextProvider>
+            <App />
+        </DataContextProvider>
     </React.StrictMode>,
     document.getElementById('root')
 );
