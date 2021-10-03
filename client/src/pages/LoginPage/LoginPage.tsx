@@ -14,6 +14,7 @@ const LoginPage: React.FunctionComponent = () => {
         return loginInTMS(email, password)
                     .then(({ data: { accessToken }}) => {
                             setToken(accessToken);
+                            localStorage.setItem('accessToken', accessToken);
                             history.push('/tasks');
                     })
                     .catch((error) => console.log(error));

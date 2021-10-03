@@ -60,6 +60,7 @@ const Header: React.FunctionComponent = () => {
                 </Container>
                 {token !== '' && <ExitToAppIcon classes={{ root: iconRoot }} onClick={() => {
                     setToken('');
+                    localStorage.setItem('accessToken', '');
                     history.push('/login');
                 }} />}
             </Toolbar>

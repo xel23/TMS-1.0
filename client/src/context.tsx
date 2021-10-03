@@ -6,7 +6,8 @@ const DataContext = createContext<{ token: string, setToken: React.Dispatch<Reac
 });
 
 const DataContextProvider = (props: { children: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; }) => {
-    const [token, setToken] = useState<string>('');
+    const accessToken = localStorage.getItem('accessToken');
+    const [token, setToken] = useState<string>(accessToken ? accessToken : '');
 
     return (
         <DataContext.Provider value={{ token, setToken }}>

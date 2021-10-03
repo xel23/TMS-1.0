@@ -14,6 +14,7 @@ const RegisterPage: React.FunctionComponent = () => {
         return registerInTMS(name, email, password)
                     .then(({ data: { accessToken }}) => {
                         setToken(accessToken);
+                        localStorage.setItem('accessToken', accessToken);
                         history.push('/tasks');
                     })
                     .catch((error) => console.log(error));
