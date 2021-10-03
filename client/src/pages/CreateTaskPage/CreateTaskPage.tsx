@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useHistory } from "react-router";
+import { useHistory } from 'react-router';
 
 import CreateTask from '../../components/CreateTask/CreateTask';
 import { createTaskRequest } from '../../requests';

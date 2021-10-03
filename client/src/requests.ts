@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const registerInTMS = (name: string, email: string, password: string) => {
+export const registerRequest = (name: string, email: string, password: string) => {
     return axios({
         method: 'post',
         url: 'http://localhost:3000/api/auth/register',
@@ -11,7 +11,7 @@ export const registerInTMS = (name: string, email: string, password: string) => 
     })
 };
 
-export const loginInTMS = (email: string, password: string) => {
+export const loginRequest = (email: string, password: string) => {
     return axios({
         method: 'post',
         url: 'http://localhost:3000/api/auth/login',
@@ -22,7 +22,7 @@ export const loginInTMS = (email: string, password: string) => {
     })
 };
 
-export const getTasks = (token: string) => {
+export const getTasksRequest = (token: string) => {
     return axios({
         method: 'get',
         url: 'http://localhost:3000/api/tasks',
@@ -53,7 +53,7 @@ export const createTaskRequest = (
         });
 };
 
-export const deleteTask = (taskId: string, token: string) => {
+export const deleteTaskRequest = (taskId: string, token: string) => {
     return axios({
         method: 'delete',
         url: `http://localhost:3000/api/tasks/${taskId}`,

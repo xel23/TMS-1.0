@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import Register from '../../components/Register/Register';
 import { DataContext } from '../../context';
-import { registerInTMS } from '../../requests';
+import { registerRequest } from '../../requests';
 
 const RegisterPage: React.FunctionComponent = () => {
     const { setToken } = useContext(DataContext);
@@ -11,7 +11,7 @@ const RegisterPage: React.FunctionComponent = () => {
     const history = useHistory();
 
     const registerInSystem = (name: string, email: string, password: string) => {
-        return registerInTMS(name, email, password)
+        return registerRequest(name, email, password)
                     .then(({ data: { accessToken }}) => {
                         setToken(accessToken);
                         localStorage.setItem('accessToken', accessToken);

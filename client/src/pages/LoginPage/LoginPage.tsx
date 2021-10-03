@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 
 import Login from '../../components/Login/Login';
 import { DataContext } from '../../context';
-import { loginInTMS } from '../../requests';
+import { loginRequest } from '../../requests';
 
 const LoginPage: React.FunctionComponent = () => {
     const { setToken } = useContext(DataContext);
@@ -11,7 +11,7 @@ const LoginPage: React.FunctionComponent = () => {
     const history = useHistory();
 
     const loginInSystem = (email: string, password: string) => {
-        return loginInTMS(email, password)
+        return loginRequest(email, password)
                     .then(({ data: { accessToken }}) => {
                             setToken(accessToken);
                             localStorage.setItem('accessToken', accessToken);

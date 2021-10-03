@@ -5,7 +5,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 import TaskList from '../../components/TaskList/TaskList';
 import { DataContext } from '../../context';
-import { getTasks, deleteTask } from '../../requests';
+import { getTasksRequest, deleteTaskRequest } from '../../requests';
 
 import { Wrapper, ButtonName } from './TasksPage.styles';
 
@@ -13,23 +13,21 @@ const TasksPage: React.FunctionComponent = () => {
     const { token } = useContext(DataContext);
     const [tasks, setTasks] = useState([]);
 
-    useEffect(() => {
-        getTasks(token)
+    const getTasks = () => {
+        getTasksRequest(token)
             .then(({ data: { tasks } }) => {
                 setTasks(tasks);
             })
             .catch((error) => console.log(error));
-    }, []);
-
-    const deleteTaskItem = (taskId: string) => {
-        deleteTask(taskId, token).then(() => {
-            getTasks(token)
-                .then(({ data: { tasks } }) => {
-                    setTasks(tasks);
-                })
-                .catch((error) => console.log(error));
-        })
     };
+
+    const deleteTask = (taskId: string) => {
+        deleteTaskRequest(taskId, token).then(() => getTasks())
+    };
+
+    useEffect(() => {
+        getTasks();
+    }, []);
 
     return (
         <Wrapper>
@@ -38,7 +36,7 @@ const TasksPage: React.FunctionComponent = () => {
                     <ButtonName>Create task</ButtonName><AddIcon fontSize="small" />
                 </Button>
             </Link>
-            <TaskList tasks={tasks} deleteTask={(taskId) => deleteTaskItem(taskId)}/>
+            <TaskList tasks={tasks} deleteTask={(taskId) => deleteTask(taskId)}/>
         </Wrapper>
     )
 };
