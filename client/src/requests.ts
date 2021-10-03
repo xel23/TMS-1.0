@@ -5,9 +5,9 @@ export const registerInTMS = (name: string, email: string, password: string) => 
         method: 'post',
         url: 'http://localhost:3000/api/auth/register',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
         },
-        data: `name=${name}&email=${email}&password=${password}`,
+        data: JSON.stringify({ name: name, email: email, password: password }),
     })
 };
 
@@ -16,9 +16,9 @@ export const loginInTMS = (email: string, password: string) => {
         method: 'post',
         url: 'http://localhost:3000/api/auth/login',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
         },
-        data: `email=${email}&password=${password}`,
+        data: JSON.stringify({ email: email, password: password }),
     })
 };
 

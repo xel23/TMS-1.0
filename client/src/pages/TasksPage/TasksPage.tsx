@@ -5,7 +5,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 import TaskList from '../../components/TaskList/TaskList';
 import { DataContext } from '../../context';
-import { getTasks } from '../../requests';
+import { getTasks, deleteTask } from '../../requests';
 
 import { Wrapper, ButtonName } from './TasksPage.styles';
 
@@ -21,6 +21,16 @@ const TasksPage: React.FunctionComponent = () => {
             .catch((error) => console.log(error));
     }, []);
 
+    const deleteTaskItem = (taskId: string) => {
+        deleteTask(taskId, token).then(() => {
+            getTasks(token)
+                .then(({ data: { tasks } }) => {
+                    setTasks(tasks);
+                })
+                .catch((error) => console.log(error));
+        })
+    };
+
     return (
         <Wrapper>
             <Link to="/create_task">
@@ -28,7 +38,7 @@ const TasksPage: React.FunctionComponent = () => {
                     <ButtonName>Create task</ButtonName><AddIcon fontSize="small" />
                 </Button>
             </Link>
-            <TaskList tasks={tasks}/>
+            <TaskList tasks={tasks} deleteTask={(taskId) => deleteTaskItem(taskId)}/>
         </Wrapper>
     )
 };
