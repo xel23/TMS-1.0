@@ -2,7 +2,7 @@ import { TaskProps } from '../../../components/Task/Task';
 
 export const tasks: TaskProps[] = [
     {
-        id: "615746f75cd55d7e19783373",
+        _id: "615746f75cd55d7e19783373",
         summary: "1 summary",
         description: "1 description",
         author: {
@@ -19,7 +19,7 @@ export const tasks: TaskProps[] = [
         verifiedBy: null,
     },
     {
-        id: "615747225cd55d7e19783379",
+        _id: "615747225cd55d7e19783379",
         summary: "2 summary",
         description: "2 description",
         author: {

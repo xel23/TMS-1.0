@@ -9,7 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { Wrapper, Container, ContainerRight, ContainerLeft, ContainerIcons, Status, Priority, Author } from './Task.styles';
 
 export interface TaskProps {
-    id: string;
+    _id: string;
     summary: string;
     description: string | null;
     author: {
@@ -29,7 +29,7 @@ export interface TaskProps {
 const Task: React.FunctionComponent<TaskProps> = (props) => {
     return (
         <Wrapper>
-            <Link to={`tasks/${props.id}`}>
+            <Link to={`tasks/${props._id}`}>
                 <div>{props.summary}</div>
             </Link>
             <Container>
@@ -54,7 +54,7 @@ const Task: React.FunctionComponent<TaskProps> = (props) => {
                 </ContainerLeft>
                 <ContainerIcons>
                     <Tooltip title="Edit task" placement="top">
-                        <Link to={`/edit_task/${props.id}`}>
+                        <Link to={`/edit_task/${props._id}`}>
                             <CreateIcon color="action" />
                         </Link>
                     </Tooltip>

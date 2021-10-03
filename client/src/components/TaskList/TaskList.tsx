@@ -10,7 +10,7 @@ const TaskList: React.FunctionComponent<TaskListProps> = ({ tasks }) => {
     return (
         <>
             {tasks.map((task) => (
-                <Task key={task.id} {...task} />
+                <Task key={task._id} {...task} />
             ))}
         </>
     )
