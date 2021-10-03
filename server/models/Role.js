@@ -5,6 +5,9 @@ const schema = new Schema({
         type: String,
         required: true
     },
+    readTask: {
+        type: Boolean
+    },
     updateTask: {
         type: Boolean
     },

@@ -6,6 +6,77 @@ const auth = require('../middleware/auth.middleware');
 const abilities = require('../middleware/task.abilities');
 const router = Router();
 
+router.delete('/:id',
+    auth,
+    abilities,
+    async (req, res) => {
+        try {
+            const taskId = req.params.id;
+            const task = await Task.findOne({_id: taskId});
+            if (!task) {
+                return res.status(404).json('Not found');
+            }
+
+            if (!req.ability.can('delete', task)) {
+                return res.status(403).json('Forbidden');
+            }
+
+            await Task.deleteOne({_id: taskId});
+            return res.status(201).json({task});
+        } catch (e) {
+            error(e, res);
+        }
+    });
+
+router.post('/:id',
+    auth,
+    abilities,
+    [
+        check('created', 'Error property "created"').not().exists(),
+        check('updated', 'Error property "updated"').not().exists(),
+        check('author', 'Error property "author"').not().exists()
+    ],
+    async (req, res) => {
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                console.log(errors);
+                return res.status(400).json({
+                    errors: errors,
+                    message: 'Incorrect request'
+                })
+            }
+
+            const taskId = req.params.id;
+            const task = await Task.findOne({_id: taskId});
+
+            if (!task) {
+                return res.status(404).json('Not found');
+            }
+
+            if (!req.ability.can('update', task)) {
+                return res.status(403).json('Forbidden');
+            }
+
+            let changedSomething = false;
+            for (let key in req.body) {
+                task[key] = req.body[key];
+                changedSomething = true;
+            }
+
+            if (changedSomething) {
+                task.updated = Date.now();
+                task.updatedBy = {userId: req.user.userId, name: req.user.name};
+
+                await task.save();
+            }
+
+            return res.status(201).json({task});
+        } catch (e) {
+            error(e, res);
+        }
+    });
+
 router.get('/:id',
     auth,
     abilities,
