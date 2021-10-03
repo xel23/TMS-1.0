@@ -40,6 +40,12 @@ const schema = new Schema({
     updated: {
         type: Date
     },
+    updatedBy: {
+        type: {
+            name: String,
+            userId: String
+        }
+    },
     verifiedBy: {
         type: String
     }
