@@ -8,7 +8,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import { Wrapper, Container, ContainerRight, ContainerLeft, ContainerIcons, Status, Priority, Author } from './Task.styles';
 
-export interface TaskProps {
+export interface TaskItem {
     _id: string;
     summary: string;
     description: string | null;
@@ -26,40 +26,45 @@ export interface TaskProps {
     verifiedBy: string | null;
 }
 
-const Task: React.FunctionComponent<TaskProps> = (props) => {
+interface TaskProps {
+    task: TaskItem;
+    deleteTask: (taskId: string) => void;
+}
+
+const Task: React.FunctionComponent<TaskProps> = ({ task, deleteTask }) => {
     return (
         <Wrapper>
-            <Link to={`tasks/${props._id}`}>
-                <div>{props.summary}</div>
+            <Link to={`tasks/${task._id}`}>
+                <div>{task.summary}</div>
             </Link>
             <Container>
                 <ContainerRight>
-                    <Status className={props.status.toLowerCase().replace(' ', '-')}>
-                        <span>{props.status}</span>
+                    <Status className={task.status.toLowerCase().replace(' ', '-')}>
+                        <span>{task.status}</span>
                     </Status>
                     <div>
-                        <span>{props.assignee ? props.assignee : 'Unassigned'}</span>
+                        <span>{task.assignee ? task.assignee : 'Unassigned'}</span>
                     </div>
-                    <Priority className={props.priority.toLowerCase()}>
-                        <span>{props.priority}</span>
+                    <Priority className={task.priority.toLowerCase()}>
+                        <span>{task.priority}</span>
                     </Priority>
                     <div>
-                        <span>{props.subsystem ? props.subsystem : 'No Subsystem'}</span>
+                        <span>{task.subsystem ? task.subsystem : 'No Subsystem'}</span>
                     </div>
-                    <div>{props.type}</div>
+                    <div>{task.type}</div>
                 </ContainerRight>
                 <ContainerLeft>
-                    <Author>{props.author.name}</Author>
-                    <div>{moment(props.created).format('D MMM YYYY HH:mm')}</div>
+                    <Author>{task.author.name}</Author>
+                    <div>{moment(task.created).format('D MMM YYYY HH:mm')}</div>
                 </ContainerLeft>
                 <ContainerIcons>
                     <Tooltip title="Edit task" placement="top">
-                        <Link to={`/edit_task/${props._id}`}>
+                        <Link to={`/edit_task/${task._id}`}>
                             <CreateIcon color="action" />
                         </Link>
                     </Tooltip>
                     <Tooltip title="Delete task" placement="top">
-                        <DeleteIcon color="secondary" />
+                        <DeleteIcon color="secondary" onClick={() => deleteTask(task._id)} />
                     </Tooltip>
                 </ContainerIcons>
             </Container>

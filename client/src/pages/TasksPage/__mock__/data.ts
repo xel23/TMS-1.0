@@ -1,6 +1,6 @@
-import { TaskProps } from '../../../components/Task/Task';
+import { TaskItem } from '../../../components/Task/Task';
 
-export const tasks: TaskProps[] = [
+export const tasks: TaskItem[] = [
     {
         _id: "615746f75cd55d7e19783373",
         summary: "1 summary",

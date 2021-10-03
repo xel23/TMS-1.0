@@ -1,16 +1,20 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
-import Task, { TaskProps } from '../Task/Task';
+import Task, { TaskItem } from '../Task/Task';
+import { DataContext } from '../../context';
+import { deleteTask } from '../../requests';
 
 interface TaskListProps {
-    tasks: TaskProps[];
+    tasks: TaskItem[];
 }
 
 const TaskList: React.FunctionComponent<TaskListProps> = ({ tasks }) => {
+    const { token } = useContext(DataContext);
+
     return (
         <>
             {tasks.map((task) => (
-                <Task key={task._id} {...task} />
+                <Task key={task._id} task={{...task}} deleteTask={(taskId) => deleteTask(taskId, token)} />
             ))}
         </>
     )
