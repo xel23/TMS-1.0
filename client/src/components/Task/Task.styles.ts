@@ -13,6 +13,10 @@ export const Wrapper = styled.div`
     }
 `;
 
+export const Summary = styled.div`
+    margin-bottom: 10px;
+`;
+
 export const Container = styled.div`
     display: grid;
     grid-template-columns: 4fr 1fr 0.2fr;

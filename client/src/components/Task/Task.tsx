@@ -6,7 +6,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import CreateIcon from '@material-ui/icons/Create';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { Wrapper, Container, ContainerRight, ContainerLeft, ContainerIcons, Status, Priority, Author } from './Task.styles';
+import { Wrapper, Summary, Container, ContainerRight, ContainerLeft, ContainerIcons, Status, Priority, Author } from './Task.styles';
 
 export interface TaskItem {
     _id: string;
@@ -35,7 +35,7 @@ const Task: React.FunctionComponent<TaskProps> = ({ task, deleteTask }) => {
     return (
         <Wrapper>
             <Link to={`tasks/${task._id}`}>
-                <div>{task.summary}</div>
+                <Summary>{task.summary}</Summary>
             </Link>
             <Container>
                 <ContainerRight>

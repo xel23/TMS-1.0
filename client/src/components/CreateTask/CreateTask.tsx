@@ -42,7 +42,15 @@ const CreateTask: React.FunctionComponent<CreateTaskProps> = ({ createTask }) =>
 
     const handleClick = () => {
         if (summary !== '') {
-            createTask(summary, description, assignee, type, priority, subsystem, status);
+            createTask(
+                summary,
+                description !== '' ? description : null,
+                assignee !== '' ? assignee : null,
+                type,
+                priority,
+                subsystem !== '' ? subsystem : null,
+                status
+            );
         }
 
         setErrors({ summary: summary === '' });
