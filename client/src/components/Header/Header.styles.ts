@@ -29,3 +29,14 @@ export const useToolbarStyles = makeStyles(() =>
         }
     })
 );
+
+export const useIconStyles = makeStyles(() =>
+    createStyles({
+        root: {
+            '&:hover': {
+                cursor: 'pointer',
+            }
+        }
+    })
+);
+

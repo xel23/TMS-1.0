@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -7,13 +7,16 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import { DataContext } from '../../context';
 
-import { Container, Item, useAppBarStyles, useToolbarStyles } from './Header.styles';
+import { Container, Item, useAppBarStyles, useToolbarStyles, useIconStyles } from './Header.styles';
 
 const Header: React.FunctionComponent = () => {
-    const { token } = useContext(DataContext);
+    const { token, setToken } = useContext(DataContext);
+
+    const history = useHistory();
 
     const { root: appBarRoot } = useAppBarStyles();
     const { root: toolbarRoot } = useToolbarStyles();
+    const { root: iconRoot } = useIconStyles();
 
     return (
         <AppBar classes={{ root: appBarRoot }} position="static" color="primary">
@@ -55,7 +58,10 @@ const Header: React.FunctionComponent = () => {
                         </>
                     )}
                 </Container>
-                {token !== '' && <ExitToAppIcon />}
+                {token !== '' && <ExitToAppIcon classes={{ root: iconRoot }} onClick={() => {
+                    setToken('');
+                    history.push('/login');
+                }} />}
             </Toolbar>
         </AppBar>
     );
