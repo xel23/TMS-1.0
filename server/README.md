@@ -75,7 +75,7 @@ Method: `GET` \
 Headers:
 ```
 {
-    Autorization: [AuthToken]
+    Authorization: [AuthToken]
 }
 ```
 Response:
@@ -91,7 +91,7 @@ Method: `GET` \
 Headers:
 ```
 {
-    Autorization: [AuthToken]
+    Authorization: [AuthToken]
 }
 ```
 Response:
@@ -107,7 +107,7 @@ Method: `POST` \
 Headers:
 ```
 {
-    Autorization: [AuthToken]
+    Authorization: [AuthToken]
 }
 ```
 Body:
@@ -135,7 +135,7 @@ Method: `DELETE` \
 Headers:
 ```
 {
-    Autorization: [AuthToken]
+    Authorization: [AuthToken]
 }
 ```
 Response:
@@ -151,7 +151,7 @@ Method: `POST` \
 Headers:
 ```
 {
-    Autorization: [AuthToken]
+    Authorization: [AuthToken]
 }
 ```
 Body:
@@ -182,7 +182,7 @@ Method: `POST` \
 Headers:
 ```
 {
-    Autorization: [AuthToken]
+    Authorization: [AuthToken]
 }
 ```
 Body:
