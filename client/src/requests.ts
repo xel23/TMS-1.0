@@ -22,6 +22,16 @@ export const loginRequest = (email: string, password: string) => {
     })
 };
 
+export const getTaskRequest = (taskId: string, token: string) => {
+    return axios({
+        method: 'get',
+        url: `http://localhost:3000/api/tasks/${taskId}`,
+        headers: {
+            'Authorization': `Basic ${token}`,
+        },
+    });
+};
+
 export const getTasksRequest = (token: string) => {
     return axios({
         method: 'get',

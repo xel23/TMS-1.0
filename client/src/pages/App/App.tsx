@@ -5,6 +5,7 @@ import Header from '../../components/Header/Header';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import LoginPage from '../LoginPage/LoginPage';
 import TasksPage from '../TasksPage/TasksPage';
+import TaskDetailsPage from '../TaskDetailsPage/TaskDetailsPage';
 import CreateTaskPage from '../CreateTaskPage/CreateTaskPage';
 import Notification from '../../components/Notification/Notification';
 
@@ -39,7 +40,7 @@ const App: React.FunctionComponent = () => {
                         {token === '' ? <Redirect to="/login" /> : <TasksPage />}
                     </Route>
                     <Route path="/tasks/:taskId">
-                        {token === '' ? <Redirect to="/login" /> : <div>Task page</div>}
+                        {token === '' ? <Redirect to="/login" /> : <TaskDetailsPage />}
                     </Route>
                     <Route path="/create_task">
                         {token === '' ? <Redirect to="/login" /> : <CreateTaskPage />}
