@@ -63,6 +63,29 @@ export const createTaskRequest = (
         });
 };
 
+export const updateTaskRequest = (
+    task: {
+        summary?: string | null,
+        description?: string | null,
+        assignee?: string | null,
+        type?: string | null,
+        priority?: string | null,
+        subsystem?: string | null,
+        status?: string | null,
+        verifiedBy?: string | null
+    },
+    taskId: string, token: string) => {
+    return axios({
+        method: 'post',
+        url: `http://localhost:3000/api/tasks/${taskId}`,
+        headers: {
+            'Authorization': `Basic ${token}`,
+            'Content-Type': 'application/json',
+        },
+        data: JSON.stringify(task),
+    });
+};
+
 export const deleteTaskRequest = (taskId: string, token: string) => {
     return axios({
         method: 'delete',

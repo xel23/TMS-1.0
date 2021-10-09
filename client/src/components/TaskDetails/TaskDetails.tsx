@@ -71,9 +71,10 @@ export interface Task {
 export interface TaskDetailsProps {
     task: Task;
     isLoaded: boolean;
+    updateTask: (summary: string, description: string, assignee: string, type: string, priority: string, subsystem: string, status: string, verifiedBy: string) => void;
 }
 
-const TaskDetails: React.FunctionComponent<TaskDetailsProps> = ({ task, isLoaded }) => {
+const TaskDetails: React.FunctionComponent<TaskDetailsProps> = ({ task, isLoaded, updateTask }) => {
     const { user: { role } } = useContext(DataContext);
 
     const [summary, setSummary] = useState<string>('');
@@ -294,8 +295,13 @@ const TaskDetails: React.FunctionComponent<TaskDetailsProps> = ({ task, isLoaded
                 </Item>
                 {role.updateTask && (
                     <ButtonWrapper className="update_btn">
-                        <Button variant="contained" color="primary" onClick={() => {}}>
-                            <ButtonName>Update task</ButtonName><ArrowForwardIcon fontSize="small"/>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            disabled={errors.summary || errors.description}
+                            onClick={() => updateTask(summary, description, assignee, type, priority, subsystem, status, verifiedBy)}
+                        >
+                                <ButtonName>Update task</ButtonName><ArrowForwardIcon fontSize="small"/>
                         </Button>
                     </ButtonWrapper>
                 )}
