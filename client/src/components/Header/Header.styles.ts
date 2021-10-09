@@ -17,7 +17,7 @@ export const Item = styled.div`
 export const useAppBarStyles = makeStyles(() =>
     createStyles({
         root: {
-            boxShadow: 'none',
+            boxShadow: 'none !important',
         }
     })
 );

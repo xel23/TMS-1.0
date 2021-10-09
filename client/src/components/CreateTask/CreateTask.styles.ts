@@ -15,7 +15,7 @@ export const useTextFieldStyles = makeStyles(() =>
                 padding: '8px',
             },
 
-            '& .MuiOutlinedInput-multiline': {
+            '& .MuiInputBase-multiline': {
                 height: '70px',
                 alignItems: 'start',
                 padding: 0,
@@ -26,8 +26,8 @@ export const useTextFieldStyles = makeStyles(() =>
 
 export const useSelectStyles = makeStyles(() =>
     createStyles({
-        outlined: {
-            padding: '8px',
+        select: {
+            padding: '8px !important',
         }
     })
 );

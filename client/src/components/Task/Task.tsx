@@ -63,7 +63,7 @@ const Task: React.FunctionComponent<TaskProps> = ({ task, deleteTask }) => {
                 <ContainerIcons>
                     {role.deleteTask && (
                         <Tooltip title="Delete task" placement="top">
-                            <DeleteIcon color="secondary" onClick={() => deleteTask(task._id)} />
+                            <DeleteIcon color="error" onClick={() => deleteTask(task._id)} />
                         </Tooltip>
                     )}
                 </ContainerIcons>

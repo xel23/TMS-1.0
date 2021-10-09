@@ -135,7 +135,7 @@ export const useTextFieldStyles = makeStyles(() =>
                 padding: '8px',
             },
 
-            '& .MuiOutlinedInput-multiline': {
+            '& .MuiInputBase-multiline': {
                 height: '70px',
                 alignItems: 'start',
                 padding: 0,
@@ -171,7 +171,7 @@ export const useSelectStyles = makeStyles(() =>
 export const useAccordionStyles = makeStyles(() =>
     createStyles({
         root: {
-            boxShadow: 'none',
+            boxShadow: 'none !important',
         },
         expanded: {
             margin: '0 !important',
@@ -183,9 +183,9 @@ export const useAccordionSummaryStyles = makeStyles(() =>
     createStyles({
         root: {
             fontWeight: 'bold',
-            color: 'rgba(0, 0, 0, 0.26)',
-            background: 'rgba(0, 0, 0, 0.12)',
-            marginBottom: '10px',
+            color: 'rgba(0, 0, 0, 0.26) !important',
+            background: 'rgba(0, 0, 0, 0.12) !important',
+            marginBottom: '10px !important',
         }
     })
 );

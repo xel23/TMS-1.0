@@ -56,7 +56,7 @@ const CreateTask: React.FunctionComponent<CreateTaskProps> = ({ createTask }) =>
         setErrors({ summary: summary === '' });
     };
 
-    const { outlined } = useSelectStyles();
+    const { select } = useSelectStyles();
     const { root } = useTextFieldStyles();
 
     return (
@@ -91,7 +91,7 @@ const CreateTask: React.FunctionComponent<CreateTaskProps> = ({ createTask }) =>
             />
             <FieldName>Type</FieldName>
             <Select
-                classes={{ outlined }}
+                classes={{ select }}
                 variant="outlined"
                 value={type}
                 onChange={(event) => setType(event.target.value as string)}
@@ -102,7 +102,7 @@ const CreateTask: React.FunctionComponent<CreateTaskProps> = ({ createTask }) =>
             </Select>
             <FieldName>Priority</FieldName>
             <Select
-                classes={{ outlined }}
+                classes={{ select }}
                 variant="outlined"
                 value={priority}
                 onChange={(event) => setPriority(event.target.value as string)}
@@ -121,7 +121,7 @@ const CreateTask: React.FunctionComponent<CreateTaskProps> = ({ createTask }) =>
             />
             <FieldName>Status</FieldName>
             <Select
-                classes={{ outlined }}
+                classes={{ select }}
                 variant="outlined"
                 value={status}
                 onChange={(event) => setStatus(event.target.value as string)}
