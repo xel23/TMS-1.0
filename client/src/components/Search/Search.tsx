@@ -9,13 +9,16 @@ import Chip from '@mui/material/Chip';
 
 import { TASK_TYPES, TASK_PRIORITIES, TASK_STATUSES } from '../CreateTask/__mock__/data';
 
-import { Wrapper, useTextFieldStyles, useSelectStyles } from './Search.styles';
+import { Wrapper, Placeholder, useTextFieldStyles, useSelectStyles, useMenuItemStyles } from './Search.styles';
 
 const Search: React.FunctionComponent = () => {
     const [searchStr, setSearchStr] = useState('');
     const [types, setTypes] = useState<string[]>([]);
     const [priorities, setPriorities] = useState<string[]>([]);
     const [statuses, setStatuses] = useState<string[]>([]);
+    const [typesOpen, setTypesOpen] = useState(false);
+    const [prioritiesOpen, setPrioritiesOpen] = useState(false);
+    const [statusesOpen, setStatusesOpen] = useState(false);
 
     const handleChangeTypes = (event: SelectChangeEvent<typeof types>) => {
         const {
@@ -23,6 +26,7 @@ const Search: React.FunctionComponent = () => {
         } = event;
 
         setTypes(typeof value === 'string' ? value.split(',') : value,);
+        setTypesOpen(false);
     };
 
     const handleChangePriorities = (event: SelectChangeEvent<typeof priorities>) => {
@@ -31,6 +35,7 @@ const Search: React.FunctionComponent = () => {
         } = event;
 
         setPriorities(typeof value === 'string' ? value.split(',') : value,);
+        setPrioritiesOpen(false);
     };
 
     const handleChangeStatuses = (event: SelectChangeEvent<typeof statuses>) => {
@@ -39,10 +44,12 @@ const Search: React.FunctionComponent = () => {
         } = event;
 
         setStatuses(typeof value === 'string' ? value.split(',') : value,);
+        setStatusesOpen(false);
     };
 
     const { root: textFieldRoot } = useTextFieldStyles();
     const { root: selectRoot } = useSelectStyles();
+    const { root: menuItemRoot } = useMenuItemStyles();
 
     return (
         <Wrapper>
@@ -56,18 +63,28 @@ const Search: React.FunctionComponent = () => {
             <Select
                 classes={{ root: selectRoot }}
                 multiple
+                displayEmpty
+                open={typesOpen}
+                onClose={() => setTypesOpen(false)}
+                onOpen={() => setTypesOpen(true)}
                 value={types}
                 onChange={handleChangeTypes}
-                renderValue={(selected) => (
-                    <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}>
-                        {selected.map((value) => (
-                            <Chip key={value} label={value}/>
-                        ))}
-                    </Box>
-                )}
+                renderValue={(selected) => {
+                    if (selected.length === 0) {
+                        return <Placeholder>Choose type</Placeholder>;
+                    }
+
+                    return (
+                        <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}>
+                            {selected.map((value) => (
+                                <Chip key={value} label={value}/>
+                            ))}
+                        </Box>
+                    );
+                }}
             >
                 {TASK_TYPES.map((type) => (
-                    <MenuItem key={type} value={type}>
+                    <MenuItem key={type} value={type} classes={{ root: menuItemRoot }}>
                         <Checkbox checked={types.indexOf(type) > -1} />
                         <ListItemText primary={type} />
                     </MenuItem>
@@ -76,18 +93,28 @@ const Search: React.FunctionComponent = () => {
             <Select
                 classes={{ root: selectRoot }}
                 multiple
+                displayEmpty
+                open={prioritiesOpen}
+                onClose={() => setPrioritiesOpen(false)}
+                onOpen={() => setPrioritiesOpen(true)}
                 value={priorities}
                 onChange={handleChangePriorities}
-                renderValue={(selected) => (
-                    <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}>
-                        {selected.map((value) => (
-                            <Chip key={value} label={value}/>
-                        ))}
-                    </Box>
-                )}
+                renderValue={(selected) => {
+                    if (selected.length === 0) {
+                        return <Placeholder>Choose priority</Placeholder>;
+                    }
+
+                    return (
+                        <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}>
+                            {selected.map((value) => (
+                                <Chip key={value} label={value}/>
+                            ))}
+                        </Box>
+                    );
+                }}
             >
                 {TASK_PRIORITIES.map((priority) => (
-                    <MenuItem key={priority} value={priority}>
+                    <MenuItem key={priority} value={priority} classes={{ root: menuItemRoot }}>
                         <Checkbox checked={priorities.indexOf(priority) > -1} />
                         <ListItemText primary={priority} />
                     </MenuItem>
@@ -96,18 +123,28 @@ const Search: React.FunctionComponent = () => {
             <Select
                 classes={{ root: selectRoot }}
                 multiple
+                displayEmpty
+                open={statusesOpen}
+                onClose={() => setStatusesOpen(false)}
+                onOpen={() => setStatusesOpen(true)}
                 value={statuses}
                 onChange={handleChangeStatuses}
-                renderValue={(selected) => (
-                    <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}>
-                        {selected.map((value) => (
-                            <Chip key={value} label={value}/>
-                        ))}
-                    </Box>
-                )}
+                renderValue={(selected) => {
+                    if (selected.length === 0) {
+                        return <Placeholder>Choose status</Placeholder>;
+                    }
+
+                    return (
+                        <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}>
+                            {selected.map((value) => (
+                                <Chip key={value} label={value}/>
+                            ))}
+                        </Box>
+                    );
+                }}
             >
                 {TASK_STATUSES.map((status) => (
-                    <MenuItem key={status} value={status}>
+                    <MenuItem key={status} value={status} classes={{ root: menuItemRoot }}>
                         <Checkbox checked={statuses.indexOf(status) > -1} />
                         <ListItemText primary={status} />
                     </MenuItem>

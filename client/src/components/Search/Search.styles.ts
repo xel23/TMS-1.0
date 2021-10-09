@@ -8,6 +8,10 @@ export const Wrapper = styled.div`
     margin: 25px 0;
 `;
 
+export const Placeholder = styled.div`
+    color: rgba(0, 0, 0, 0.35)
+`;
+
 export const useTextFieldStyles = makeStyles(() =>
     createStyles({
         root: {
@@ -26,6 +30,14 @@ export const useSelectStyles = makeStyles(() =>
             '& > div': {
                 padding: '8px',
             }
+        }
+    })
+);
+
+export const useMenuItemStyles = makeStyles(() =>
+    createStyles({
+        root: {
+            padding: '0 !important',
         }
     })
 );
