@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useState } from 'react';
-import TextField from '@material-ui/core/TextField/TextField';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import TextField from '@mui/material/TextField';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import { TASK_TYPES, TASK_PRIORITIES, TASK_STATUSES } from './__mock__/data';
 

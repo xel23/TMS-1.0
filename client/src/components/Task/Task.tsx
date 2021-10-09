@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import Divider from '@material-ui/core/Divider';
-import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
+import Divider from '@mui/material/Divider';
+import Tooltip from '@mui/material/Tooltip';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import { DataContext } from '../../context';
 

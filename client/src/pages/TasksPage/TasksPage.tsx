@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
-import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+import CircularProgress from '@mui/material/CircularProgress';
 
+import Search from '../../components/Search/Search';
 import TaskList from '../../components/TaskList/TaskList';
 import { DataContext } from '../../context';
 import { getTasksRequest, deleteTaskRequest } from '../../requests';
@@ -49,6 +50,7 @@ const TasksPage: React.FunctionComponent = () => {
                     </Button>
                 </Link>
             )}
+            <Search />
             {!isLoaded ? <Loading><CircularProgress size={100} /></Loading> : <TaskList tasks={tasks} deleteTask={(taskId) => deleteTask(taskId)}/>}
         </Wrapper>
     )

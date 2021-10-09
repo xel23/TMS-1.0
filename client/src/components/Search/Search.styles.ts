@@ -1,24 +1,18 @@
 import styled from 'styled-components';
-import { createStyles, makeStyles } from '@mui/styles';
+import {createStyles, makeStyles} from '@mui/styles';
 
 export const Wrapper = styled.div`
     display: grid;
-    justify-content: center;
-    margin: 2.5vh 0 5vh 0;
+    grid-template-columns: 2fr repeat(3, 1fr);
+    grid-gap: 15px;
+    margin: 25px 0;
 `;
 
 export const useTextFieldStyles = makeStyles(() =>
     createStyles({
         root: {
             '& .MuiOutlinedInput-input': {
-                width: '55vw',
                 padding: '8px',
-            },
-
-            '& .MuiOutlinedInput-multiline': {
-                height: '70px',
-                alignItems: 'start',
-                padding: 0,
             }
         }
     })
@@ -26,8 +20,12 @@ export const useTextFieldStyles = makeStyles(() =>
 
 export const useSelectStyles = makeStyles(() =>
     createStyles({
-        outlined: {
-            padding: '8px',
+        root: {
+            height: 'fit-content',
+
+            '& > div': {
+                padding: '8px',
+            }
         }
     })
 );

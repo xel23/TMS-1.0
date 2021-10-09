@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { createStyles, makeStyles } from '@material-ui/core';
+import { createStyles, makeStyles } from '@mui/styles';
 
 export const Loading = styled.div`
     position: absolute;

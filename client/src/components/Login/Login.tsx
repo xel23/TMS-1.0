@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
-import TextField from '@material-ui/core/TextField/TextField';
-import Button from '@material-ui/core/Button';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import { Wrapper, ButtonWrapper, FieldName, ButtonName, Error, useTextFieldStyles } from '../Register/Register.styles';
 

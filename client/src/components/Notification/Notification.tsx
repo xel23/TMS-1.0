@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import Snackbar from '@material-ui/core/Snackbar/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent/SnackbarContent';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import Snackbar from '@mui/material/Snackbar';
+import SnackbarContent from '@mui/material/SnackbarContent';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 import { DataContext } from '../../context';
 
