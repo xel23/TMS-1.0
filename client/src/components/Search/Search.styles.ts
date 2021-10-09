@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {createStyles, makeStyles} from '@mui/styles';
+import { createStyles, makeStyles } from '@mui/styles';
 
 export const Wrapper = styled.div`
     display: grid;
@@ -8,36 +8,12 @@ export const Wrapper = styled.div`
     margin: 25px 0;
 `;
 
-export const Placeholder = styled.div`
-    color: rgba(0, 0, 0, 0.35)
-`;
-
 export const useTextFieldStyles = makeStyles(() =>
     createStyles({
         root: {
             '& .MuiOutlinedInput-input': {
                 padding: '8px',
             }
-        }
-    })
-);
-
-export const useSelectStyles = makeStyles(() =>
-    createStyles({
-        root: {
-            height: 'fit-content',
-
-            '& > div': {
-                padding: '8px',
-            }
-        }
-    })
-);
-
-export const useMenuItemStyles = makeStyles(() =>
-    createStyles({
-        root: {
-            padding: '0 !important',
         }
     })
 );
