@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { createStyles, makeStyles } from '@mui/styles';
 
 export const Loading = styled.div`
     position: absolute;
@@ -81,35 +80,6 @@ export const ButtonName = styled.span`
     margin: 0 8px 0 0;
 `;
 
-export const CommentItem = styled.div`
-    margin-bottom: 15px;
-`;
-
-export const CommentTitle = styled.div`
-    display: flex;
-    color: rgb(0 0 0 / 54%);
-    margin-bottom: 5px;
-`;
-
-export const HistoryItem = styled.div`
-    margin-bottom: 15px;
-`;
-
-export const HistoryTitle = styled.div`
-    display: flex;
-    color: rgb(0 0 0 / 54%);
-    margin-bottom: 5px;
-`;
-
-export const HistoryData = styled.div`
-    display: flex;
-    align-items: center;
-`;
-
-export const Category = styled.div`
-    font-style: italic;
-`;
-
 export const Item = styled.div`
     display: grid;
     grid-template-columns: 95px 1fr;
@@ -127,73 +97,3 @@ export const Error = styled.span`
     letter-spacing: 1px;
     margin: 15px 0 0 0;
 `;
-
-export const useTextFieldStyles = makeStyles(() =>
-    createStyles({
-        root: {
-            '& .MuiOutlinedInput-input': {
-                padding: '8px',
-            },
-
-            '& .MuiInputBase-multiline': {
-                height: '70px',
-                alignItems: 'start',
-                padding: 0,
-            },
-
-            '& .MuiInputBase-input.Mui-disabled': {
-                cursor: 'not-allowed',
-            },
-
-            '&.summary > div:first-child': {
-                fontSize: '32px',
-                color: 'rgba(0, 0, 0, 0.87)',
-            },
-
-            '&.description > div:first-child': {
-                color: 'rgba(0, 0, 0, 0.87)',
-            }
-        },
-    })
-);
-
-export const useSelectStyles = makeStyles(() =>
-    createStyles({
-        outlined: {
-            padding: '8px',
-        },
-        disabled: {
-            cursor: 'not-allowed !important',
-        },
-    })
-);
-
-export const useAccordionStyles = makeStyles(() =>
-    createStyles({
-        root: {
-            boxShadow: 'none !important',
-        },
-        expanded: {
-            margin: '0 !important',
-        }
-    })
-);
-
-export const useAccordionSummaryStyles = makeStyles(() =>
-    createStyles({
-        root: {
-            fontWeight: 'bold',
-            color: 'rgba(0, 0, 0, 0.26) !important',
-            background: 'rgba(0, 0, 0, 0.12) !important',
-            marginBottom: '10px !important',
-        }
-    })
-);
-
-export const useAccordionDetailsStyles = makeStyles(() =>
-    createStyles({
-        root: {
-            flexDirection: 'column',
-        }
-    })
-);
