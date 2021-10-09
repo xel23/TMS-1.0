@@ -1,15 +1,14 @@
-import React, { ChangeEvent, useState } from 'react';
-import TextField from '@mui/material/TextField';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
+import TextFieldComponent from './TextFieldComponent/TextFieldComponent';
+import SelectComponent from './SelectComponent/SelectComponent';
+
 import { TASK_TYPES, TASK_PRIORITIES, TASK_STATUSES } from './__mock__/data';
 
-import { Wrapper, useTextFieldStyles, useSelectStyles } from './CreateTask.styles';
+import { Wrapper } from './CreateTask.styles';
 import { ButtonWrapper, ButtonName, Error } from '../Register/Register.styles';
-import { FieldName } from '../Login/TextFieldComponent/TextFieldComponentProps.styles';
 
 interface CreateTaskProps {
     createTask: (
@@ -34,13 +33,6 @@ const CreateTask: React.FunctionComponent<CreateTaskProps> = ({ createTask }) =>
 
     const [errors, setErrors] = useState<{ summary: boolean }>({ summary: false });
 
-    const handleChangeSummary = (event: ChangeEvent<HTMLInputElement>) => {
-        const { target: { value } } = event;
-
-        setSummary(value);
-        setErrors({ summary: value === '' });
-    };
-
     const handleClick = () => {
         if (summary !== '') {
             createTask(
@@ -57,80 +49,55 @@ const CreateTask: React.FunctionComponent<CreateTaskProps> = ({ createTask }) =>
         setErrors({ summary: summary === '' });
     };
 
-    const { select } = useSelectStyles();
-    const { root } = useTextFieldStyles();
-
     return (
         <Wrapper>
-            <FieldName>Summary</FieldName>
-            <TextField
-                classes={{ root }}
-                required
-                error={errors.summary}
-                variant="outlined"
-                placeholder="Enter summary"
+            <TextFieldComponent
+                fieldName="Summary"
                 value={summary}
-                onChange={handleChangeSummary}
+                placeholder="Enter summary"
+                error={errors.summary}
+                isRequired={true}
+                setValue={(value) => setSummary(value)}
+                setError={(error) => setErrors({ summary: error })}
             />
-            <FieldName>Description</FieldName>
-            <TextField
-                classes={{ root }}
-                variant="outlined"
-                placeholder="Enter description"
-                multiline
-                maxRows={4}
+            <TextFieldComponent
+                fieldName="Description"
                 value={description}
-                onChange={(event) => setDescription(event.target.value)}
+                placeholder="Enter description"
+                maxRows={4}
+                isMultiline={true}
+                setValue={(value) => setDescription(value)}
             />
-            <FieldName>Assignee</FieldName>
-            <TextField
-                classes={{ root }}
-                variant="outlined"
-                placeholder="Enter email address"
+            <TextFieldComponent
+                fieldName="Assignee"
                 value={assignee}
-                onChange={(event) => setAssignee(event.target.value)}
+                placeholder="Enter email address"
+                setValue={(value) => setAssignee(value)}
             />
-            <FieldName>Type</FieldName>
-            <Select
-                classes={{ select }}
-                variant="outlined"
+            <SelectComponent
+                fieldName="Type"
                 value={type}
-                onChange={(event) => setType(event.target.value as string)}
-            >
-                {TASK_TYPES.map((taskType) => (
-                    <MenuItem key={taskType} value={taskType}>{taskType}</MenuItem>
-                ))}
-            </Select>
-            <FieldName>Priority</FieldName>
-            <Select
-                classes={{ select }}
-                variant="outlined"
-                value={priority}
-                onChange={(event) => setPriority(event.target.value as string)}
-            >
-                {TASK_PRIORITIES.map((taskPriority) => (
-                    <MenuItem key={taskPriority} value={taskPriority}>{taskPriority}</MenuItem>
-                ))}
-            </Select>
-            <FieldName>Subsystem</FieldName>
-            <TextField
-                classes={{ root }}
-                variant="outlined"
-                placeholder="Enter subsystem"
-                value={subsystem}
-                onChange={(event) => setSubsystem(event.target.value)}
+                options={TASK_TYPES}
+                setValue={(value) => setType(value)}
             />
-            <FieldName>Status</FieldName>
-            <Select
-                classes={{ select }}
-                variant="outlined"
+            <SelectComponent
+                fieldName="Priority"
+                value={priority}
+                options={TASK_PRIORITIES}
+                setValue={(value) => setPriority(value)}
+            />
+            <TextFieldComponent
+                fieldName="Subsystem"
+                value={subsystem}
+                placeholder="Enter subsystem"
+                setValue={(value) => setSubsystem(value)}
+            />
+            <SelectComponent
+                fieldName="Status"
                 value={status}
-                onChange={(event) => setStatus(event.target.value as string)}
-            >
-                {TASK_STATUSES.map((taskStatus) => (
-                    <MenuItem key={taskStatus} value={taskStatus}>{taskStatus}</MenuItem>
-                ))}
-            </Select>
+                options={TASK_STATUSES}
+                setValue={(value) => setStatus(value)}
+            />
             {Object.values(errors).includes(true) && <Error>*Fields are required</Error>}
             <ButtonWrapper>
                 <Button variant="outlined" onClick={handleClick}>
