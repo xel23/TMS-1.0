@@ -6,15 +6,17 @@ import { DataContext } from '../../context';
 import { registerRequest } from '../../requests';
 
 const RegisterPage: React.FunctionComponent = () => {
-    const { setToken, setNotification } = useContext(DataContext);
+    const { setUser, setNotification } = useContext(DataContext);
 
     const history = useHistory();
 
     const registerInSystem = (name: string, email: string, password: string) => {
         return registerRequest(name, email, password)
-                    .then(({ status, data: { accessToken, message }}) => {
-                        setToken(accessToken);
-                        localStorage.setItem('accessToken', accessToken);
+                    .then(({ status, data: { userId, name, accessToken, role, message }}) => {
+                        const user = { userId: userId, name: name, accessToken: accessToken, role: role };
+
+                        setUser(user);
+                        localStorage.setItem('user', JSON.stringify(user));
                         history.push('/tasks');
                         setNotification({ isOpen: true, status: status, message: message });
                     })

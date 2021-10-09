@@ -23,11 +23,11 @@ const TaskDetailsPage: React.FunctionComponent = () => {
         verifiedBy: null,
     });
 
-    const { token, setNotification } = useContext(DataContext);
+    const { user: { accessToken }, setNotification } = useContext(DataContext);
     const { taskId } = useParams<{ taskId: string }>();
 
     useEffect(() => {
-        getTaskRequest(taskId, token)
+        getTaskRequest(taskId, accessToken)
             .then(({ data: { task } }) => {
                 setTask(task);
                 setIsLoaded(true);

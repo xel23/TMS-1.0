@@ -10,11 +10,11 @@ import { getTasksRequest, deleteTaskRequest } from '../../requests';
 import { Wrapper, ButtonName } from './TasksPage.styles';
 
 const TasksPage: React.FunctionComponent = () => {
-    const { token, setNotification } = useContext(DataContext);
+    const { user: { accessToken }, setNotification } = useContext(DataContext);
     const [tasks, setTasks] = useState([]);
 
     const getTasks = () => {
-        getTasksRequest(token)
+        getTasksRequest(accessToken)
             .then(({ data: { tasks } }) => {
                 setTasks(tasks);
             })
@@ -22,7 +22,7 @@ const TasksPage: React.FunctionComponent = () => {
     };
 
     const deleteTask = (taskId: string) => {
-        deleteTaskRequest(taskId, token)
+        deleteTaskRequest(taskId, accessToken)
             .then(() => getTasks())
             .catch((error) => {
                 setNotification({ isOpen: true, status: error.response.status, message: error.response.data })

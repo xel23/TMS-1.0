@@ -14,7 +14,7 @@ import { DataContext } from '../../context';
 import { Wrapper } from './App.styles';
 
 const App: React.FunctionComponent = () => {
-    const { token } = useContext(DataContext);
+    const { user: { accessToken } } = useContext(DataContext);
 
     return (
         <Wrapper>
@@ -26,7 +26,7 @@ const App: React.FunctionComponent = () => {
                         path="/"
                         render={() => {
                             return (
-                                token === '' ?
+                                accessToken === '' ?
                                     <Redirect to="/login" /> :
                                     <Redirect to="/tasks" />)
                         }}
@@ -34,22 +34,22 @@ const App: React.FunctionComponent = () => {
                     <Route path="/register" component={() => <RegisterPage />} />
                     <Route path="/login" component={() => <LoginPage />} />
                     <Route path="/dashboard">
-                        {token === '' ? <Redirect to="/login" /> : <div>Dashboard page</div>}
+                        {accessToken === '' ? <Redirect to="/login" /> : <div>Dashboard page</div>}
                     </Route>
                     <Route exact path="/tasks">
-                        {token === '' ? <Redirect to="/login" /> : <TasksPage />}
+                        {accessToken === '' ? <Redirect to="/login" /> : <TasksPage />}
                     </Route>
                     <Route path="/tasks/:taskId">
-                        {token === '' ? <Redirect to="/login" /> : <TaskDetailsPage />}
+                        {accessToken === '' ? <Redirect to="/login" /> : <TaskDetailsPage />}
                     </Route>
                     <Route path="/create_task">
-                        {token === '' ? <Redirect to="/login" /> : <CreateTaskPage />}
+                        {accessToken === '' ? <Redirect to="/login" /> : <CreateTaskPage />}
                     </Route>
                     <Route path="/edit_task/:taskId">
-                        {token === '' ? <Redirect to="/login" /> : <div>Edit task page</div>}
+                        {accessToken === '' ? <Redirect to="/login" /> : <div>Edit task page</div>}
                     </Route>
                     <Route path="/archive">
-                        {token === '' ? <Redirect to="/login" /> : <div>Archive page</div>}
+                        {accessToken === '' ? <Redirect to="/login" /> : <div>Archive page</div>}
                     </Route>
                 </Switch>
                 <Notification />

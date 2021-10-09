@@ -5,12 +5,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
-import { DataContext } from '../../context';
+import { DataContext, initialUser } from '../../context';
 
 import { Container, Item, useAppBarStyles, useToolbarStyles, useIconStyles } from './Header.styles';
 
 const Header: React.FunctionComponent = () => {
-    const { token, setToken } = useContext(DataContext);
+    const { user: { accessToken }, setUser } = useContext(DataContext);
 
     const history = useHistory();
 
@@ -25,7 +25,7 @@ const Header: React.FunctionComponent = () => {
                     <Typography variant="h6" component="div">
                         <Item>Task Management System</Item>
                     </Typography>
-                    {token === '' ? (
+                    {accessToken === '' ? (
                         <>
                             <Typography variant="h6" component="div">
                                 <Item>
@@ -58,9 +58,9 @@ const Header: React.FunctionComponent = () => {
                         </>
                     )}
                 </Container>
-                {token !== '' && <ExitToAppIcon classes={{ root: iconRoot }} onClick={() => {
-                    setToken('');
-                    localStorage.setItem('accessToken', '');
+                {accessToken !== '' && <ExitToAppIcon classes={{ root: iconRoot }} onClick={() => {
+                    setUser(initialUser);
+                    localStorage.setItem('user', '');
                     history.push('/login');
                 }} />}
             </Toolbar>

@@ -6,15 +6,15 @@ import { DataContext } from '../../context';
 import { loginRequest } from '../../requests';
 
 const LoginPage: React.FunctionComponent = () => {
-    const { setToken, setNotification } = useContext(DataContext);
+    const { setUser, setNotification } = useContext(DataContext);
 
     const history = useHistory();
 
     const loginInSystem = (email: string, password: string) => {
         return loginRequest(email, password)
-                    .then(({ data: { accessToken }}) => {
-                            setToken(accessToken);
-                            localStorage.setItem('accessToken', accessToken);
+                    .then(({ data }) => {
+                            setUser(data);
+                            localStorage.setItem('user', JSON.stringify(data));
                             history.push('/tasks');
                     })
                     .catch((error) => {
