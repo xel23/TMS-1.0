@@ -1,9 +1,10 @@
-import React, { ChangeEvent, useState } from 'react';
-import TextField from '@mui/material/TextField';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-import { Wrapper, ButtonWrapper, FieldName, ButtonName, Error, useTextFieldStyles } from '../Register/Register.styles';
+import TextFieldComponent from './TextFieldComponent/TextFieldComponent';
+
+import { Wrapper, ButtonWrapper, ButtonName, Error } from '../Register/Register.styles';
 
 interface LoginProps {
     login: (email: string, password: string) => void;
@@ -14,20 +15,6 @@ const Login: React.FunctionComponent<LoginProps> = ({ login }) => {
     const [password, setPassword] = useState<string>('');
     const [errors, setErrors] = useState<{ email: boolean, password: boolean }>({ email: false, password: false });
 
-    const handleChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
-        const { target: { value } } = event;
-
-        setEmail(value);
-        setErrors((prev) => ({ ...prev, email: value === '' }));
-    };
-
-    const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
-        const { target: { value } } = event;
-
-        setPassword(value);
-        setErrors((prev) => ({ ...prev, password: value === '' }));
-    };
-
     const handleClick = () => {
         if (email !== '' && password !== '') {
             login(email, password);
@@ -36,30 +23,24 @@ const Login: React.FunctionComponent<LoginProps> = ({ login }) => {
         setErrors({ email: email === '', password: password === '' });
     };
 
-    const { root } = useTextFieldStyles();
-
     return (
         <Wrapper>
-            <FieldName>Email address</FieldName>
-            <TextField
-                classes={{ root }}
-                required
-                error={errors.email}
-                variant="outlined"
+            <TextFieldComponent
+                fieldName="Email address"
                 placeholder="Enter email"
                 value={email}
-                onChange={handleChangeEmail}
+                error={errors.email}
+                setValue={(value) => setEmail(value)}
+                setErrors={(error) => setErrors((prev) => ({ ...prev, email: error }))}
             />
-            <FieldName>Password</FieldName>
-            <TextField
-                classes={{ root }}
-                required
-                error={errors.password}
+            <TextFieldComponent
+                fieldName="Password"
                 type="password"
-                variant="outlined"
                 placeholder="Enter password"
                 value={password}
-                onChange={handleChangePassword}
+                error={errors.password}
+                setValue={(value) => setPassword(value)}
+                setErrors={(error) => setErrors((prev) => ({ ...prev, password: error }))}
             />
             {Object.values(errors).includes(true) && <Error>*Fields are required</Error>}
             <ButtonWrapper>
