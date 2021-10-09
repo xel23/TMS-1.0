@@ -19,7 +19,7 @@ export const Summary = styled.div`
 
 export const Container = styled.div`
     display: grid;
-    grid-template-columns: 4fr 1fr 0.2fr;
+    grid-template-columns: 4fr 1fr 0.1fr;
 `;
 
 export const ContainerRight = styled.div`
@@ -49,8 +49,8 @@ export const ContainerLeft = styled.div`
 `;
 
 export const ContainerIcons = styled.div`
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    justify-content: end;
     
     & > svg {
         cursor: pointer;

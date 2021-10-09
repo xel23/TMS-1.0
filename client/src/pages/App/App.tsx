@@ -45,9 +45,6 @@ const App: React.FunctionComponent = () => {
                     <Route path="/create_task">
                         {accessToken === '' ? <Redirect to="/login" /> : <CreateTaskPage />}
                     </Route>
-                    <Route path="/edit_task/:taskId">
-                        {accessToken === '' ? <Redirect to="/login" /> : <div>Edit task page</div>}
-                    </Route>
                     <Route path="/archive">
                         {accessToken === '' ? <Redirect to="/login" /> : <div>Archive page</div>}
                     </Route>

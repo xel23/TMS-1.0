@@ -3,7 +3,6 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import Divider from '@material-ui/core/Divider';
 import Tooltip from '@material-ui/core/Tooltip';
-import CreateIcon from '@material-ui/icons/Create';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import { Wrapper, Summary, Container, ContainerRight, ContainerLeft, ContainerIcons, Status, Priority, Author } from './Task.styles';
@@ -58,11 +57,6 @@ const Task: React.FunctionComponent<TaskProps> = ({ task, deleteTask }) => {
                     <div>{moment(task.created).format('D MMM YYYY HH:mm')}</div>
                 </ContainerLeft>
                 <ContainerIcons>
-                    <Tooltip title="Edit task" placement="top">
-                        <Link to={`/edit_task/${task._id}`}>
-                            <CreateIcon color="action" />
-                        </Link>
-                    </Tooltip>
                     <Tooltip title="Delete task" placement="top">
                         <DeleteIcon color="secondary" onClick={() => deleteTask(task._id)} />
                     </Tooltip>
