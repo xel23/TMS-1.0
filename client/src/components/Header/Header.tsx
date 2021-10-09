@@ -7,12 +7,24 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 import { DataContext, initialUser } from '../../context';
 
+import { LINKS_UNAUTHORIZED_USER, LINKS_AUTHORIZED_USER } from './const';
+
 import { Container, Item, useAppBarStyles, useToolbarStyles, useIconStyles } from './Header.styles';
 
 const Header: React.FunctionComponent = () => {
     const { user: { accessToken }, setUser } = useContext(DataContext);
 
     const history = useHistory();
+
+    const renderLink = (linkTo: string, linkName: string) => {
+        return (
+            <Typography variant="h6" component="div">
+                <Item>
+                    <Link to={linkTo}>{linkName}</Link>
+                </Item>
+            </Typography>
+        )
+    };
 
     const { root: appBarRoot } = useAppBarStyles();
     const { root: toolbarRoot } = useToolbarStyles();
@@ -27,42 +39,32 @@ const Header: React.FunctionComponent = () => {
                     </Typography>
                     {accessToken === '' ? (
                         <>
-                            <Typography variant="h6" component="div">
-                                <Item>
-                                    <Link to="/register">Register</Link>
-                                </Item>
-                            </Typography>
-                            <Typography variant="h6" component="div">
-                                <Item>
-                                    <Link to="/login">Login</Link>
-                                </Item>
-                            </Typography>
+                            {LINKS_UNAUTHORIZED_USER.map(({ linkTo, linkName }) => (
+                                <React.Fragment key={linkName}>
+                                    {renderLink(linkTo, linkName)}
+                                </React.Fragment>
+                            ))}
                         </>
                     ) : (
                         <>
-                            <Typography variant="h6" component="div">
-                                <Item>
-                                    <Link to="/dashboard">Dashboard</Link>
-                                </Item>
-                            </Typography>
-                            <Typography variant="h6" component="div">
-                                <Item>
-                                    <Link to="/tasks">Task List</Link>
-                                </Item>
-                            </Typography>
-                            <Typography variant="h6" component="div">
-                                <Item>
-                                    <Link to="/archive">Archive</Link>
-                                </Item>
-                            </Typography>
+                            {LINKS_AUTHORIZED_USER.map(({ linkTo, linkName }) => (
+                                <React.Fragment key={linkName}>
+                                    {renderLink(linkTo, linkName)}
+                                </React.Fragment>
+                            ))}
                         </>
                     )}
                 </Container>
-                {accessToken !== '' && <ExitToAppIcon classes={{ root: iconRoot }} onClick={() => {
-                    setUser(initialUser);
-                    localStorage.setItem('user', '');
-                    history.push('/login');
-                }} />}
+                {accessToken !== '' && (
+                    <ExitToAppIcon
+                        classes={{ root: iconRoot }}
+                        onClick={() => {
+                            setUser(initialUser);
+                            localStorage.setItem('user', '');
+                            history.push('/login');
+                        }}
+                    />
+                )}
             </Toolbar>
         </AppBar>
     );
