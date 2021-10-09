@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import TextField from '@mui/material/TextField';
 
-import { FieldName, useTextFieldStyles } from '../../Register/Register.styles';
+import { FieldName, useTextFieldStyles } from './TextFieldComponentProps.styles';
 
 interface TextFieldComponentProps {
     fieldName: string;

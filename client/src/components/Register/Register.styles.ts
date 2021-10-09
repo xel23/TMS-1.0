@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { createStyles, makeStyles } from '@mui/styles';
 
 export const Wrapper = styled.div`
     display: grid;
@@ -13,11 +12,6 @@ export const ButtonWrapper = styled.div`
     margin-top: 20px;
 `;
 
-export const FieldName = styled.div`
-    font-size: 18px;
-    margin: 15px 0 5px 0;
-`;
-
 export const ButtonName = styled.span`
     margin: 0 8px 0 0;
 `;
@@ -27,14 +21,3 @@ export const Error = styled.span`
     letter-spacing: 1px;
     margin: 15px 0 0 0;
 `;
-
-export const useTextFieldStyles = makeStyles(() =>
-    createStyles({
-        root: {
-            '& .MuiOutlinedInput-input': {
-                width: '35vw',
-                padding: '8px',
-            }
-        }
-    })
-);

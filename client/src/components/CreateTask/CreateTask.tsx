@@ -8,7 +8,8 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { TASK_TYPES, TASK_PRIORITIES, TASK_STATUSES } from './__mock__/data';
 
 import { Wrapper, useTextFieldStyles, useSelectStyles } from './CreateTask.styles';
-import { ButtonWrapper, FieldName, ButtonName, Error } from '../Register/Register.styles';
+import { ButtonWrapper, ButtonName, Error } from '../Register/Register.styles';
+import { FieldName } from '../Login/TextFieldComponent/TextFieldComponentProps.styles';
 
 interface CreateTaskProps {
     createTask: (

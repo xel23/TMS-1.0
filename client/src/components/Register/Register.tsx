@@ -1,9 +1,10 @@
-import React, { ChangeEvent, useState } from 'react';
-import TextField from '@mui/material/TextField';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-import { Wrapper, ButtonWrapper, FieldName, ButtonName, Error, useTextFieldStyles } from './Register.styles';
+import TextFieldComponent from '../Login/TextFieldComponent/TextFieldComponent';
+
+import { Wrapper, ButtonWrapper, ButtonName, Error } from './Register.styles';
 
 interface RegisterProps {
     register: (name: string, email: string, password: string) => void;
@@ -15,27 +16,6 @@ const Register: React.FunctionComponent<RegisterProps> = ({ register }) => {
     const [password, setPassword] = useState<string>('');
     const [errors, setErrors] = useState<{ name: boolean, email: boolean, password: boolean }>({ name: false, email: false, password: false });
 
-    const handleChangeName = (event: ChangeEvent<HTMLInputElement>) => {
-        const { target: { value } } = event;
-
-        setName(value);
-        setErrors((prev) => ({ ...prev, name: value === '' }));
-    };
-
-    const handleChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
-        const { target: { value } } = event;
-
-        setEmail(value);
-        setErrors((prev) => ({ ...prev, email: value === '' }));
-    };
-
-    const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
-        const { target: { value } } = event;
-
-        setPassword(value);
-        setErrors((prev) => ({ ...prev, password: value === '' }));
-    };
-
     const handleClick = () => {
         if (name !== '' && email !== '' && password !== '') {
             register(name, email, password);
@@ -44,40 +24,32 @@ const Register: React.FunctionComponent<RegisterProps> = ({ register }) => {
         setErrors({ name: name === '', email: email === '', password: password === '' });
     };
 
-    const { root } = useTextFieldStyles();
-
     return (
         <Wrapper>
-            <FieldName>Name</FieldName>
-            <TextField
-                classes={{ root }}
-                required
-                error={errors.name}
-                variant="outlined"
+            <TextFieldComponent
+                fieldName="Name"
                 placeholder="Enter name"
                 value={name}
-                onChange={handleChangeName}
+                error={errors.name}
+                setValue={(value) => setName(value)}
+                setErrors={(error) => setErrors((prev) => ({ ...prev, name: error }))}
             />
-            <FieldName>Email address</FieldName>
-            <TextField
-                classes={{ root }}
-                required
-                error={errors.email}
-                variant="outlined"
+            <TextFieldComponent
+                fieldName="Email address"
                 placeholder="Enter email"
                 value={email}
-                onChange={handleChangeEmail}
+                error={errors.email}
+                setValue={(value) => setEmail(value)}
+                setErrors={(error) => setErrors((prev) => ({ ...prev, email: error }))}
             />
-            <FieldName>Password</FieldName>
-            <TextField
-                classes={{ root }}
-                required
-                error={errors.password}
+            <TextFieldComponent
+                fieldName="Password"
                 type="password"
-                variant="outlined"
                 placeholder="Enter password"
                 value={password}
-                onChange={handleChangePassword}
+                error={errors.password}
+                setValue={(value) => setPassword(value)}
+                setErrors={(error) => setErrors((prev) => ({ ...prev, password: error }))}
             />
             {Object.values(errors).includes(true) && <Error>*Fields are required</Error>}
             <ButtonWrapper>
