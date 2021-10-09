@@ -10,7 +10,7 @@ import { getTasksRequest, deleteTaskRequest } from '../../requests';
 import { Wrapper, ButtonName } from './TasksPage.styles';
 
 const TasksPage: React.FunctionComponent = () => {
-    const { user: { accessToken }, setNotification } = useContext(DataContext);
+    const { user: { accessToken, role }, setNotification } = useContext(DataContext);
     const [tasks, setTasks] = useState([]);
 
     const getTasks = () => {
@@ -30,16 +30,18 @@ const TasksPage: React.FunctionComponent = () => {
     };
 
     useEffect(() => {
-        getTasks();
+        role.readTask && getTasks();
     }, []);
 
     return (
         <Wrapper>
-            <Link to="/create_task">
-                <Button variant="outlined">
-                    <ButtonName>Create task</ButtonName><AddIcon fontSize="small" />
-                </Button>
-            </Link>
+            {role.createTask && (
+                <Link to="/create_task">
+                    <Button variant="outlined">
+                        <ButtonName>Create task</ButtonName><AddIcon fontSize="small" />
+                    </Button>
+                </Link>
+            )}
             <TaskList tasks={tasks} deleteTask={(taskId) => deleteTask(taskId)}/>
         </Wrapper>
     )

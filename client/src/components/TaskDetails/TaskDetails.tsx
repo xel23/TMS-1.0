@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import moment from 'moment';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField/TextField';
@@ -11,6 +11,8 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddIcon from '@material-ui/icons/Add';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+
+import { DataContext } from '../../context';
 
 import { TASK_PRIORITIES, TASK_STATUSES, TASK_TYPES } from '../CreateTask/__mock__/data';
 
@@ -72,31 +74,33 @@ export interface TaskDetailsProps {
 }
 
 const TaskDetails: React.FunctionComponent<TaskDetailsProps> = ({ task, isLoaded }) => {
+    const { user: { role } } = useContext(DataContext);
+
     const [summary, setSummary] = useState<string>('');
-    const [description, setDescription] = useState<string | null>('');
+    const [description, setDescription] = useState<string>('');
     const [comment, setComment] = useState<string>('');
-    const [assignee, setAssignee] = useState<string | null>('');
+    const [assignee, setAssignee] = useState<string>('');
     const [type, setType] = useState<string>('');
     const [priority, setPriority] = useState<string>('');
-    const [subsystem, setSubsystem] = useState<string | null>('');
+    const [subsystem, setSubsystem] = useState<string>('');
     const [status, setStatus] = useState<string>('');
-    const [verifiedBy, setVerifiedBy] = useState<string | null>('');
+    const [verifiedBy, setVerifiedBy] = useState<string>('');
 
     const [errors, setErrors] = useState<{ summary: boolean, description: boolean }>({ summary: false, description: false });
 
     useEffect(() => {
         setSummary(task.summary);
-        setDescription(task.description);
-        setAssignee(task.assignee);
+        setDescription(task.description ? task.description : '');
+        setAssignee(task.assignee ? task.assignee : '');
         setType(task.type);
         setPriority(task.priority);
-        setSubsystem(task.subsystem);
+        setSubsystem(task.subsystem ? task.subsystem : '');
         setStatus(task.status);
-        setVerifiedBy(task.verifiedBy);
+        setVerifiedBy(task.verifiedBy ? task.verifiedBy : '');
     }, [task.summary, task.description, task.assignee, task.type, task.priority, task.subsystem, task.status, task.verifiedBy]);
 
     const { root: textFieldRoot } = useTextFieldStyles();
-    const { outlined } = useSelectStyles();
+    const { outlined, disabled } = useSelectStyles();
     const { root: accordionRoot, expanded } = useAccordionStyles();
     const { root: accordionSummaryRoot } = useAccordionSummaryStyles();
     const { root: accordionDetailsRoot } = useAccordionDetailsStyles();
@@ -117,6 +121,7 @@ const TaskDetails: React.FunctionComponent<TaskDetailsProps> = ({ task, isLoaded
                                 className="summary"
                                 InputProps={{ disableUnderline: true }}
                                 variant="standard"
+                                disabled={!role.updateTask}
                                 placeholder="Write a summary"
                                 value={summary}
                                 error={errors.summary}
@@ -130,8 +135,10 @@ const TaskDetails: React.FunctionComponent<TaskDetailsProps> = ({ task, isLoaded
                         <Description>
                             <TextField
                                 classes={{ root: textFieldRoot }}
+                                className="description"
                                 InputProps={{ disableUnderline: true }}
                                 variant="standard"
+                                disabled={!role.updateTask}
                                 placeholder="Write a description"
                                 value={description}
                                 error={errors.description}
@@ -215,6 +222,7 @@ const TaskDetails: React.FunctionComponent<TaskDetailsProps> = ({ task, isLoaded
                     <TextField
                         classes={{ root: textFieldRoot }}
                         variant="standard"
+                        disabled={!role.updateTask}
                         placeholder="Enter email address"
                         value={assignee}
                         onChange={(event) => setAssignee(event.target.value)}
@@ -223,8 +231,9 @@ const TaskDetails: React.FunctionComponent<TaskDetailsProps> = ({ task, isLoaded
                 <Item>
                     <div>Type</div>
                     <Select
-                        classes={{ outlined }}
+                        classes={{ outlined, disabled }}
                         variant="standard"
+                        disabled={!role.updateTask}
                         value={type}
                         onChange={(event) => setType(event.target.value as string)}
                     >
@@ -236,8 +245,9 @@ const TaskDetails: React.FunctionComponent<TaskDetailsProps> = ({ task, isLoaded
                 <Item>
                     <div>Priority</div>
                     <Select
-                        classes={{ outlined }}
+                        classes={{ outlined, disabled }}
                         variant="standard"
+                        disabled={!role.updateTask}
                         value={priority}
                         onChange={(event) => setPriority(event.target.value as string)}
                     >
@@ -251,6 +261,7 @@ const TaskDetails: React.FunctionComponent<TaskDetailsProps> = ({ task, isLoaded
                     <TextField
                         classes={{ root: textFieldRoot }}
                         variant="standard"
+                        disabled={!role.updateTask}
                         placeholder="Enter subsystem"
                         value={subsystem}
                         onChange={(event) => setSubsystem(event.target.value)}
@@ -259,8 +270,9 @@ const TaskDetails: React.FunctionComponent<TaskDetailsProps> = ({ task, isLoaded
                 <Item>
                     <div>Status</div>
                     <Select
-                        classes={{ outlined }}
+                        classes={{ outlined, disabled }}
                         variant="standard"
+                        disabled={!role.updateTask}
                         value={status}
                         onChange={(event) => setStatus(event.target.value as string)}
                     >
@@ -274,16 +286,19 @@ const TaskDetails: React.FunctionComponent<TaskDetailsProps> = ({ task, isLoaded
                     <TextField
                         classes={{ root: textFieldRoot }}
                         variant="standard"
+                        disabled={!role.updateTask}
                         placeholder="Enter email address"
                         value={verifiedBy}
                         onChange={(event) => setVerifiedBy(event.target.value)}
                     />
                 </Item>
-                <ButtonWrapper className="update_btn">
-                    <Button variant="contained" color="primary" onClick={() => {}}>
-                        <ButtonName>Update task</ButtonName><ArrowForwardIcon fontSize="small"/>
-                    </Button>
-                </ButtonWrapper>
+                {role.updateTask && (
+                    <ButtonWrapper className="update_btn">
+                        <Button variant="contained" color="primary" onClick={() => {}}>
+                            <ButtonName>Update task</ButtonName><ArrowForwardIcon fontSize="small"/>
+                        </Button>
+                    </ButtonWrapper>
+                )}
             </LeftWrapper>
         </Wrapper>
     );

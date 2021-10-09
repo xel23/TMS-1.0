@@ -140,8 +140,17 @@ export const useTextFieldStyles = makeStyles(() =>
                 padding: 0,
             },
 
+            '& .MuiInputBase-input.Mui-disabled': {
+                cursor: 'not-allowed',
+            },
+
             '&.summary > div:first-child': {
                 fontSize: '32px',
+                color: 'rgba(0, 0, 0, 0.87)',
+            },
+
+            '&.description > div:first-child': {
+                color: 'rgba(0, 0, 0, 0.87)',
             }
         },
     })
@@ -151,7 +160,10 @@ export const useSelectStyles = makeStyles(() =>
     createStyles({
         outlined: {
             padding: '8px',
-        }
+        },
+        disabled: {
+            cursor: 'not-allowed !important',
+        },
     })
 );
 

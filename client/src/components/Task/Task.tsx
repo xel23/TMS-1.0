@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import Divider from '@material-ui/core/Divider';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
+
+import { DataContext } from '../../context';
 
 import { Wrapper, Summary, Container, ContainerRight, ContainerLeft, ContainerIcons, Status, Priority, Author } from './Task.styles';
 
@@ -31,12 +33,14 @@ interface TaskProps {
 }
 
 const Task: React.FunctionComponent<TaskProps> = ({ task, deleteTask }) => {
+    const { user: { role } } = useContext(DataContext);
+
     return (
         <Wrapper>
             <Link to={`tasks/${task._id}`}>
                 <Summary>{task.summary}</Summary>
             </Link>
-            <Container>
+            <Container isThereIcon={role.deleteTask}>
                 <ContainerRight>
                     <Status className={task.status.toLowerCase().replace(' ', '-')}>
                         <span>{task.status}</span>
@@ -52,14 +56,16 @@ const Task: React.FunctionComponent<TaskProps> = ({ task, deleteTask }) => {
                     </div>
                     <div>{task.type}</div>
                 </ContainerRight>
-                <ContainerLeft>
+                <ContainerLeft isThereIcon={role.deleteTask}>
                     <Author>{task.author.name}</Author>
                     <div>{moment(task.created).format('D MMM YYYY HH:mm')}</div>
                 </ContainerLeft>
                 <ContainerIcons>
-                    <Tooltip title="Delete task" placement="top">
-                        <DeleteIcon color="secondary" onClick={() => deleteTask(task._id)} />
-                    </Tooltip>
+                    {role.deleteTask && (
+                        <Tooltip title="Delete task" placement="top">
+                            <DeleteIcon color="secondary" onClick={() => deleteTask(task._id)} />
+                        </Tooltip>
+                    )}
                 </ContainerIcons>
             </Container>
             <Divider />

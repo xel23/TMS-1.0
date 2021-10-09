@@ -17,9 +17,9 @@ export const Summary = styled.div`
     margin-bottom: 10px;
 `;
 
-export const Container = styled.div`
+export const Container = styled.div<{ isThereIcon: boolean }>`
     display: grid;
-    grid-template-columns: 4fr 1fr 0.1fr;
+    grid-template-columns: ${({ isThereIcon }) => isThereIcon ? '4fr 1fr 0.1fr' : '4fr 1fr'};
 `;
 
 export const ContainerRight = styled.div`
@@ -38,10 +38,10 @@ export const ContainerRight = styled.div`
     }
 `;
 
-export const ContainerLeft = styled.div`
+export const ContainerLeft = styled.div<{ isThereIcon: boolean }>`
     display: grid;
     grid-template-columns: 1fr 2fr;
-    justify-items: center;
+    justify-items: ${({ isThereIcon }) => isThereIcon ? 'center' : 'end'};
     
     & > div {
         padding: 5px;

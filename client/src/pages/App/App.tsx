@@ -14,7 +14,7 @@ import { DataContext } from '../../context';
 import { Wrapper } from './App.styles';
 
 const App: React.FunctionComponent = () => {
-    const { user: { accessToken } } = useContext(DataContext);
+    const { user: { accessToken, role } } = useContext(DataContext);
 
     return (
         <Wrapper>
@@ -40,10 +40,10 @@ const App: React.FunctionComponent = () => {
                         {accessToken === '' ? <Redirect to="/login" /> : <TasksPage />}
                     </Route>
                     <Route path="/tasks/:taskId">
-                        {accessToken === '' ? <Redirect to="/login" /> : <TaskDetailsPage />}
+                        {accessToken === '' ? <Redirect to="/login" /> : !role.readTask ? <Redirect to="/tasks" /> : <TaskDetailsPage />}
                     </Route>
                     <Route path="/create_task">
-                        {accessToken === '' ? <Redirect to="/login" /> : <CreateTaskPage />}
+                        {accessToken === '' ? <Redirect to="/login" /> : !role.createTask ? <Redirect to="/tasks" /> : <CreateTaskPage />}
                     </Route>
                     <Route path="/archive">
                         {accessToken === '' ? <Redirect to="/login" /> : <div>Archive page</div>}
