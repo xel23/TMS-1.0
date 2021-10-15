@@ -1,11 +1,13 @@
 const {Router} = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const {jwtSecret} = require('../config')
+const {jwtSecret, GOOGLE_CLIENT_ID} = require('../config')
 const {check, validationResult} = require('express-validator');
 const {User} = require('../models/User');
 const error = require("./services/error");
 const router = Router();
+const { OAuth2Client } = require('google-auth-library')
+const client = new OAuth2Client(GOOGLE_CLIENT_ID)
 
 router.post(
     '/register',
@@ -85,6 +87,69 @@ router.post(
             );
 
             res.status(200).json({accessToken: token, userId: user.id, name: user.name, role: user.role});
+
+        } catch (e) {
+            error(e, res);
+        }
+
+    });
+
+
+router.post(
+    '/loginGoogle',
+    [
+        check('token', 'Incorrect email').exists().isString(),
+    ],
+    async (req, res) => {
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({
+                    errors: errors.array(),
+                    message: 'Incorrect login or password'
+                })
+            }
+
+            const {token} = req.body;
+
+            const ticket = await client.verifyIdToken({
+                idToken: token,
+                audience: GOOGLE_CLIENT_ID
+            });
+            const {email} = ticket.getPayload();
+            console.log(email);
+            let user = await User.findOne({email});
+            if (!user) {
+                user = new User({email, password: token, name: email, regDate: Date.now(), role: {
+                        name: 'registered',
+                        readTask: true,
+                        updateTask: true,
+                        createTask: true,
+                        deleteTask: false,
+                        readUser: true,
+                        updateUser: false,
+                        createUser: false,
+                        deleteUser: false
+                    }});
+
+                await user.save();
+
+                const accessToken = jwt.sign(
+                    {userId: user._id},
+                    jwtSecret,
+                    {expiresIn: '24h'}
+                );
+
+                res.status(201).json({accessToken, userId: user._id, name: user.name, role: user.role, message: 'Registered successful'});
+            }
+
+            const accessToken = jwt.sign(
+                {userId: user.id, role: user.role, name: user.name},
+                jwtSecret,
+                {expiresIn: '24h'}
+            );
+
+            res.status(200).json({accessToken, userId: user.id, name: user.name, role: user.role});
 
         } catch (e) {
             error(e, res);

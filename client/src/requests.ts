@@ -22,6 +22,17 @@ export const loginRequest = (email: string, password: string) => {
     })
 };
 
+export const loginGoogleRequest = (token: string) => {
+    return axios({
+        method: 'post',
+        url: 'http://localhost:3000/api/auth/loginGoogle',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify({ token }),
+    })
+};
+
 export const getTaskRequest = (taskId: string, token: string) => {
     return axios({
         method: 'get',
