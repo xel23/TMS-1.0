@@ -42,7 +42,7 @@ router.post(
             await user.save();
 
             const token = jwt.sign(
-                {userId: user._id},
+                {userId: user.id, role: user.role, name: user.name},
                 jwtSecret,
                 {expiresIn: '24h'}
             );
