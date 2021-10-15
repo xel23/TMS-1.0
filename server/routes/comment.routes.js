@@ -7,6 +7,30 @@ const abilities = require('../middleware/comment.abilities');
 const Task = require("../models/Task");
 const router = Router();
 
+router.delete('/:id',
+    auth,
+    abilities,
+    async (req, res) => {
+        try {
+            const id = req.params.id;
+            const comment = await Comment.findOne({_id: id});
+
+            if (!comment) {
+                return res.status(404).json('Not Found');
+            }
+
+            if (!req.ability.can('delete', comment)) {
+                return res.status(403).json('Forbidden');
+            }
+
+            await Comment.deleteOne({_id: id});
+
+            return res.status(201).json({comment});
+        } catch (e) {
+            error(e, res);
+        }
+    });
+
 router.post('/:id',
     auth,
     abilities,

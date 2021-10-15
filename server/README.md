@@ -270,3 +270,19 @@ Response:
     Comment
 }
 ```
+
+### Delete comment
+Endpoint: `/api/comments/:id` \
+Method: `DELETE` \
+Headers:
+```
+{
+    Authorization: [AuthToken]
+}
+```
+Response:
+```
+{
+    Comment
+}
+```
