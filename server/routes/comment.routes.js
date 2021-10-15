@@ -6,6 +6,38 @@ const auth = require('../middleware/auth.middleware');
 const abilities = require('../middleware/comment.abilities');
 const router = Router();
 
+router.post('/',
+    auth,
+    abilities,
+    [
+        check('taskId', 'Task id error').exists().isString(),
+        check('text', 'Text error').exists().isString(),
+    ],
+    async (req, res) => {
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                console.log(errors);
+                return res.status(400).json({
+                    errors: errors[0],
+                    message: 'Incorrect request'
+                })
+            }
+
+            if (!req.ability.can('create', 'Comment')) {
+                return res.status(403).json('Forbidden');
+            }
+
+            const {taskId, text, author} = req.body;
+            const user = req.user;
+            const comment = new Comment({taskId, text, author: user.userId});
+            await comment.save();
+            return res.status(201).json({comment});
+        } catch (e) {
+            error(e, res);
+        }
+    });
+
 router.get('/:taskId',
     auth,
     abilities,

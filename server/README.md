@@ -225,3 +225,26 @@ Response:
     comments: [Comment]
 }
 ```
+
+### Create coment
+Endpoint: `/api/comments/` \
+Method: `POST` \
+Headers:
+```
+{
+    Authorization: [AuthToken]
+}
+```
+Body:
+```
+{
+    taskId: string,
+    text: string
+}
+```
+Response:
+```
+{
+    Comment
+}
+```
