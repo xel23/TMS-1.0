@@ -12,6 +12,7 @@ app.use(express.json({extended: true}));
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/tasks', require('./routes/task.routes'));
 app.use('/api/users', require('./routes/user.routes'));
+app.use('/api/comments', require('./routes/comment.routes'));
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
