@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const {jwtSecret, GOOGLE_CLIENT_ID} = require('../config')
 const {check, validationResult} = require('express-validator');
 const {User} = require('../models/User');
+const {Role} = require('../models/Role');
 const error = require("./services/error");
 const router = Router();
 const { OAuth2Client } = require('google-auth-library')
@@ -35,7 +36,8 @@ router.post(
             }
 
             const hashedPass = await bcrypt.hash(password, 12);
-            const user = new User({email, password: hashedPass, name, regDate: Date.now()});
+            const role = await Role.findOne({name: 'registered'});
+            const user = new User({email, password: hashedPass, name, role, regDate: Date.now()});
 
             await user.save();
 
