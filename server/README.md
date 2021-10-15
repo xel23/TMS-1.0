@@ -226,7 +226,7 @@ Response:
 }
 ```
 
-### Create coment
+### Create comment
 Endpoint: `/api/comments/` \
 Method: `POST` \
 Headers:
@@ -239,6 +239,28 @@ Body:
 ```
 {
     taskId: string,
+    text: string
+}
+```
+Response:
+```
+{
+    Comment
+}
+```
+
+### Update comment
+Endpoint: `/api/comments/:id` \
+Method: `POST` \
+Headers:
+```
+{
+    Authorization: [AuthToken]
+}
+```
+Body:
+```
+{
     text: string
 }
 ```

@@ -7,6 +7,44 @@ const abilities = require('../middleware/comment.abilities');
 const Task = require("../models/Task");
 const router = Router();
 
+router.post('/:id',
+    auth,
+    abilities,
+    [
+        check('text', 'Text error').exists().isString(),
+    ],
+    async (req, res) => {
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                console.log(errors);
+                return res.status(400).json({
+                    errors: errors[0],
+                    message: 'Incorrect request'
+                })
+            }
+
+            const id = req.params.id;
+            const {text} = req.body;
+            const comment = await Comment.findOne({_id: id});
+
+            if (!comment) {
+                return res.status(404).json('Not Found');
+            }
+
+            if (!req.ability.can('update', comment)) {
+                return res.status(403).json('Forbidden');
+            }
+
+            comment.text = text;
+            await comment.save();
+
+            return res.status(201).json({comment});
+        } catch (e) {
+            error(e, res);
+        }
+    });
+
 router.post('/',
     auth,
     abilities,
