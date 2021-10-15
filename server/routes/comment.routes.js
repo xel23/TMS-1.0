@@ -4,6 +4,7 @@ const {check, validationResult} = require('express-validator');
 const Comment = require('../models/Comment');
 const auth = require('../middleware/auth.middleware');
 const abilities = require('../middleware/comment.abilities');
+const Task = require("../models/Task");
 const router = Router();
 
 router.post('/',
@@ -26,6 +27,12 @@ router.post('/',
 
             if (!req.ability.can('create', 'Comment')) {
                 return res.status(403).json('Forbidden');
+            }
+
+            const task = await Task.findOne({_id: taskId});
+
+            if (!task) {
+                return res.status(404).json('Not Found');
             }
 
             const {taskId, text, author} = req.body;
