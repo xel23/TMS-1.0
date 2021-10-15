@@ -197,3 +197,31 @@ Response:
     message: string
 }
 ```
+
+## Comments
+### Comment entity
+```
+{
+    taskId: string,
+    text: string,
+    author: string,
+    created: Date,
+    edited: boolean | null
+}
+```
+
+### Get task comments
+Endpoint: `/api/comments/:taskId` \
+Method: `GET` \
+Headers:
+```
+{
+    Authorization: [AuthToken]
+}
+```
+Response:
+```
+{
+    comments: [Comment]
+}
+```
