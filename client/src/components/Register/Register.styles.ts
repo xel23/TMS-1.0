@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
 export const ButtonWrapper = styled.div`
     display: grid;
     justify-content: end;
-    margin-top: 20px;
+    margin: 20px 0;
 `;
 
 export const ButtonName = styled.span`

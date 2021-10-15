@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { GoogleLogin } from 'react-google-login';
+
 import TextFieldComponent from './TextFieldComponent/TextFieldComponent';
 
 import { Wrapper, ButtonWrapper, ButtonName, Error } from '../Register/Register.styles';
@@ -53,10 +54,9 @@ const Login: React.FunctionComponent<LoginProps> = ({ login, googleLogin }) => {
                     <ButtonName>Submit</ButtonName><ArrowForwardIcon fontSize="small"/>
                 </Button>
             </ButtonWrapper>
-
             <GoogleLogin
                 clientId="214092743713-3le6m4idqf72f1fu8nd3hng5sosjmctk.apps.googleusercontent.com"
-                buttonText="Login"
+                buttonText="Login with Google"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
                 cookiePolicy={'single_host_origin'}

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 
 import Login from '../../components/Login/Login';
 import { DataContext } from '../../context';
-import {loginGoogleRequest, loginRequest} from '../../requests';
+import { loginGoogleRequest, loginRequest } from '../../requests';
 
 const LoginPage: React.FunctionComponent = () => {
     const { setUser, setNotification } = useContext(DataContext);
@@ -12,15 +12,21 @@ const LoginPage: React.FunctionComponent = () => {
 
     const loginGoogle = (token: string) => {
         return loginGoogleRequest(token)
-            .then(({ data }) => {
-                setUser(data);
-                localStorage.setItem('user', JSON.stringify(data));
+            .then(({ status, data: { userId, name, accessToken, role, message } }) => {
+                const user = { userId: userId, name: name, accessToken: accessToken, role: role };
+
+                if (status === 201) {
+                    setNotification({ isOpen: true, status: status, message: message });
+                }
+
+                setUser(user);
+                localStorage.setItem('user', JSON.stringify(user));
                 history.push('/tasks');
             })
             .catch((error) => {
                 setNotification({ isOpen: true, status: error.response.status, message: error.response.data.message });
             });
-    }
+    };
 
     const loginInSystem = (email: string, password: string) => {
         return loginRequest(email, password)
