@@ -61,6 +61,7 @@ router.post('/:id',
             }
 
             comment.text = text;
+            comment.edited = true;
             await comment.save();
 
             return res.status(201).json({comment});
