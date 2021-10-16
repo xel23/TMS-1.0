@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import moment from 'moment';
 import Tooltip from '@mui/material/Tooltip/Tooltip';
 import TextField from '@mui/material/TextField';
@@ -12,6 +12,7 @@ import { Name } from '../TaskDetails.styles';
 import { CommentItem, CommentTitle, EditableComment } from './CommentsComponent.styles';
 
 import { Comment } from '../TaskDetails';
+import { DataContext } from '../../../context';
 
 interface CommentsProps {
     isCommentUpdated: boolean;
@@ -23,6 +24,8 @@ interface CommentsProps {
 const CommentsComponent: React.FunctionComponent<CommentsProps> = ({ isCommentUpdated, comments, updateComment, deleteComment }) => {
     const [editableCommentId, setEditableCommentId] = useState<string>('');
     const [editableCommentText, setEditableCommentText] = useState<string>('');
+
+    const { user: { role } } = useContext(DataContext);
 
     useEffect(() => {
        if (isCommentUpdated) {
@@ -45,18 +48,22 @@ const CommentsComponent: React.FunctionComponent<CommentsProps> = ({ isCommentUp
                                     <StarRateIcon color="secondary" />
                                 </Tooltip>
                             )}
-                            <Tooltip title="Edit comment" placement="top">
-                                <EditIcon
-                                    color="action"
-                                    onClick={() => {
-                                        setEditableCommentId((prev) => prev === _id ? '' : _id);
-                                        setEditableCommentText(text);
-                                    }}
-                                />
-                            </Tooltip>
-                            <Tooltip title="Delete comment" placement="top">
-                                <DeleteIcon color="error" onClick={() => deleteComment(_id)} />
-                            </Tooltip>
+                            {role.updateTask && (
+                                <>
+                                    <Tooltip title="Edit comment" placement="top">
+                                        <EditIcon
+                                            color="action"
+                                            onClick={() => {
+                                                setEditableCommentId((prev) => prev === _id ? '' : _id);
+                                                setEditableCommentText(text);
+                                            }}
+                                        />
+                                    </Tooltip>
+                                    <Tooltip title="Delete comment" placement="top">
+                                        <DeleteIcon color="error" onClick={() => deleteComment(_id)} />
+                                    </Tooltip>
+                                </>
+                            )}
                         </div>
                     </CommentTitle>
                     {_id === editableCommentId

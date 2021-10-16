@@ -114,7 +114,7 @@ const TaskDetails: React.FunctionComponent<TaskDetailsProps> = ({ task, comments
                     &nbsp;&nbsp;&nbsp;
                     {task.updatedBy && <>Updated by&nbsp;<Name>{task.updatedBy.name}</Name>&nbsp;{task.updated && moment(task.updated).format('D MMM YYYY HH:mm')}</>}
                 </DateInfo>
-                <RightWrapper>
+                <RightWrapper isThereCommentField={role.updateTask}>
                     <div>
                         <Summary>
                             <TextFieldComponent
@@ -144,21 +144,23 @@ const TaskDetails: React.FunctionComponent<TaskDetailsProps> = ({ task, comments
                         </Description>
                     </div>
                     <div>
-                        <CommentContainer>
-                            <TextFieldComponent
-                                variant="outlined"
-                                isMultiline={true}
-                                placeholder="Write a comment"
-                                maxRows={4}
-                                value={comment}
-                                setValue={(value) => setComment(value)}
-                            />
-                            <ButtonWrapper>
-                                <Button variant="contained" color="primary" disabled={comment === ''} onClick={addComment}>
-                                    <ButtonName>Add comment</ButtonName><AddIcon fontSize="small"/>
-                                </Button>
-                            </ButtonWrapper>
-                        </CommentContainer>
+                        {role.updateTask && (
+                            <CommentContainer>
+                                <TextFieldComponent
+                                    variant="outlined"
+                                    isMultiline={true}
+                                    placeholder="Write a comment"
+                                    maxRows={4}
+                                    value={comment}
+                                    setValue={(value) => setComment(value)}
+                                />
+                                <ButtonWrapper>
+                                    <Button variant="contained" color="primary" disabled={comment === ''} onClick={addComment}>
+                                        <ButtonName>Add comment</ButtonName><AddIcon fontSize="small"/>
+                                    </Button>
+                                </ButtonWrapper>
+                            </CommentContainer>
+                        )}
                         <AccordionComponent title="Comments">
                             <CommentsComponent
                                 isCommentUpdated={isCommentUpdated}

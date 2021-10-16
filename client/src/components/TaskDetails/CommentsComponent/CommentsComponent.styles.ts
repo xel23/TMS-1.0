@@ -7,10 +7,14 @@ export const CommentItem = styled.div`
 export const CommentTitle = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
     color: rgb(0 0 0 / 54%);
-    margin-bottom: -5px;
     
     & > div:first-child {
+        display: flex;
+    }
+    
+    & > div:last-child {
         display: flex;
     }
     

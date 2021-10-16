@@ -20,10 +20,10 @@ export const Wrapper = styled.div`
     margin: 25px;
 `;
 
-export const RightWrapper = styled.div`
+export const RightWrapper = styled.div<{ isThereCommentField: boolean }>`
     display: flex;
     flex-direction: column;
-    gap: 16vh;
+    gap: ${({ isThereCommentField }) => isThereCommentField ? '16vh' : '18.5vh'};
 `;
 
 export const LeftWrapper = styled.div`
