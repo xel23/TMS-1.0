@@ -13,18 +13,20 @@ export const CommentTitle = styled.div`
     & > div:first-child {
         display: flex;
     }
-    
-    & > div:last-child {
-        display: flex;
-    }
-    
-    & > * > svg {
-        cursor: pointer;
-    }
 `;
 
 export const EditableComment = styled.div`
     display: flex;
     gap: 10px;
     margin: 5px 0;
+`;
+
+export const IconsWrapper = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+    
+    & > svg {
+        cursor: pointer;
+    }
 `;

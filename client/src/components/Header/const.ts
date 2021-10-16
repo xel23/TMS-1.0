@@ -9,7 +9,9 @@ export const LINKS_UNAUTHORIZED_USER: Link[] = [
 ];
 
 export const LINKS_AUTHORIZED_USER: Link[] = [
-    { linkTo: '/dashboard', linkName: 'Dashboard' },
     { linkTo: '/tasks', linkName: 'Task List' },
-    { linkTo: '/archive', linkName: 'Archive' }
+];
+
+export const LINKS_ADMIN_USER: Link[] = [
+    { linkTo: '/management', linkName: 'User Management' }
 ];

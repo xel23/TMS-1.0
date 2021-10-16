@@ -9,7 +9,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import StarRateIcon from '@mui/icons-material/StarRate';
 
 import { Name } from '../TaskDetails.styles';
-import { CommentItem, CommentTitle, EditableComment } from './CommentsComponent.styles';
+import { CommentItem, CommentTitle, IconsWrapper, EditableComment } from './CommentsComponent.styles';
 
 import { Comment } from '../TaskDetails';
 import { DataContext } from '../../../context';
@@ -42,7 +42,7 @@ const CommentsComponent: React.FunctionComponent<CommentsProps> = ({ isCommentUp
                         <div>
                             <Name>{author}</Name>&nbsp;commented {moment(created).format('D MMM YYYY HH:mm')}
                         </div>
-                        <div>
+                        <IconsWrapper>
                             {edited && (
                                 <Tooltip title="Comment has been edited" placement="top">
                                     <StarRateIcon color="secondary" />
@@ -64,7 +64,7 @@ const CommentsComponent: React.FunctionComponent<CommentsProps> = ({ isCommentUp
                                     </Tooltip>
                                 </>
                             )}
-                        </div>
+                        </IconsWrapper>
                     </CommentTitle>
                     {_id === editableCommentId
                         ? (

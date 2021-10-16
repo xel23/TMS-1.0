@@ -7,12 +7,12 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 import { DataContext, initialUser } from '../../context';
 
-import { LINKS_UNAUTHORIZED_USER, LINKS_AUTHORIZED_USER } from './const';
+import { LINKS_UNAUTHORIZED_USER, LINKS_AUTHORIZED_USER, LINKS_ADMIN_USER } from './const';
 
 import { Container, Item, useAppBarStyles, useToolbarStyles, useIconStyles } from './Header.styles';
 
 const Header: React.FunctionComponent = () => {
-    const { user: { accessToken }, setUser } = useContext(DataContext);
+    const { user: { accessToken, role }, setUser } = useContext(DataContext);
 
     const history = useHistory();
 
@@ -52,6 +52,15 @@ const Header: React.FunctionComponent = () => {
                                     {renderLink(linkTo, linkName)}
                                 </React.Fragment>
                             ))}
+                            {role.name === 'admin' && (
+                                <>
+                                    {LINKS_ADMIN_USER.map(({ linkTo, linkName }) => (
+                                        <React.Fragment key={linkName}>
+                                            {renderLink(linkTo, linkName)}
+                                        </React.Fragment>
+                                    ))}
+                                </>
+                            )}
                         </>
                     )}
                 </Container>
