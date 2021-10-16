@@ -1,8 +1,8 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import TaskDetails, { Task } from '../../components/TaskDetails/TaskDetails';
-import { getTaskRequest, updateTaskRequest } from '../../requests';
+import TaskDetails, { Task, Comment } from '../../components/TaskDetails/TaskDetails';
+import { getTaskRequest, updateTaskRequest, getCommentsRequest, createCommentRequest, updateCommentRequest, deleteCommentRequest } from '../../requests';
 import { DataContext } from '../../context';
 
 const TaskDetailsPage: React.FunctionComponent = () => {
@@ -22,19 +22,38 @@ const TaskDetailsPage: React.FunctionComponent = () => {
         updatedBy: { userId: '', name: '' },
         verifiedBy: null,
     });
+    const [comments, setComments] = useState<Comment[]>([]);
+    const [isCommentUpdated, setIsCommentUpdated] = useState<boolean>(true);
 
     const { user: { accessToken }, setNotification } = useContext(DataContext);
     const { taskId } = useParams<{ taskId: string }>();
 
-    useEffect(() => {
-        getTaskRequest(taskId, accessToken)
+    const getTask = () => {
+        return getTaskRequest(taskId, accessToken)
             .then(({ data: { task } }) => {
                 setTask(task);
-                setIsLoaded(true);
             })
             .catch((error) => {
                 setNotification({ isOpen: true, status: error.response.status, message: error.response.data.message })
             })
+    };
+
+    const getComments = () => {
+        return getCommentsRequest(taskId, accessToken)
+            .then(({ data: { comments }}) => {
+                setComments([...comments]);
+            })
+            .catch((error) => {
+                setNotification({ isOpen: true, status: error.response.status, message: error.response.data.message })
+            })
+    };
+
+    useEffect(() => {
+        getTask().then(() => {
+            getComments().then(() => {
+                setIsLoaded(true);
+            });
+        });
     }, []);
 
     const isFieldChanged = (enteredValue: string, propsValue: string | null) => {
@@ -68,7 +87,57 @@ const TaskDetailsPage: React.FunctionComponent = () => {
             })
     };
 
-    return <TaskDetails task={task} isLoaded={isLoaded} updateTask={updateTask} />;
+    const createComment = (text: string) => {
+        createCommentRequest(task._id, text, accessToken)
+            .then(({ status, data: { comment }}) => {
+                setComments((prev) => [...prev, comment]);
+                setNotification({ isOpen: true, status: status, message: "Comment successfully added" });
+            })
+            .catch((error) => {
+                setNotification({ isOpen: true, status: error.response.status, message: error.response.data.message });
+            })
+    };
+
+    const updateComment = (commentId: string, text: string) => {
+        setIsCommentUpdated(false);
+
+        updateCommentRequest(commentId, text, accessToken)
+            .then(({ status, data: { comment }}) => {
+                const index = comments.findIndex(({_id }) => _id === commentId);
+                const updatedComments = [...comments.slice(0, index), comment, ...comments.slice(index + 1, comments.length)];
+
+                setIsCommentUpdated(true);
+                setComments([...updatedComments]);
+                setNotification({ isOpen: true, status: status, message: "Comment successfully updated" });
+            })
+            .catch((error) => {
+                setNotification({ isOpen: true, status: error.response.status, message: error.response.data.message });
+            })
+    };
+
+    const deleteComment = (commentId: string) => {
+        deleteCommentRequest(commentId, accessToken)
+            .then(({ status }) => {
+                setComments((prev) => [...prev.filter(({ _id }) => _id !== commentId)]);
+                setNotification({ isOpen: true, status: status, message: "Comment successfully deleted" });
+            })
+            .catch((error) => {
+                setNotification({ isOpen: true, status: error.response.status, message: error.response.data.message });
+            })
+    };
+
+    return (
+        <TaskDetails
+            task={task}
+            comments={comments}
+            isLoaded={isLoaded}
+            isCommentUpdated={isCommentUpdated}
+            updateTask={updateTask}
+            createComment={createComment}
+            updateComment={updateComment}
+            deleteComment={deleteComment}
+        />
+    );
 };
 
 export default TaskDetailsPage;

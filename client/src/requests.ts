@@ -106,3 +106,47 @@ export const deleteTaskRequest = (taskId: string, token: string) => {
         },
     });
 };
+
+export const getCommentsRequest = (taskId: string, token: string) => {
+    return axios({
+        method: 'get',
+        url: `http://localhost:3000/api/comments/${taskId}`,
+        headers: {
+            'Authorization': `Basic ${token}`,
+        },
+    });
+};
+
+export const createCommentRequest = (taskId: string, text: string, token: string) => {
+    return axios({
+        method: 'post',
+        url: 'http://localhost:3000/api/comments',
+        headers: {
+            'Authorization': `Basic ${token}`,
+            'Content-Type': 'application/json',
+        },
+        data: JSON.stringify({ taskId: taskId, text: text }),
+    });
+};
+
+export const updateCommentRequest = (commentId: string, text: string, token: string) => {
+    return axios({
+        method: 'post',
+        url: `http://localhost:3000/api/comments/${commentId}`,
+        headers: {
+            'Authorization': `Basic ${token}`,
+            'Content-Type': 'application/json',
+        },
+        data: JSON.stringify({ text: text }),
+    });
+};
+
+export const deleteCommentRequest = (commentId: string, token: string) => {
+    return axios({
+        method: 'delete',
+        url: `http://localhost:3000/api/comments/${commentId}`,
+        headers: {
+            'Authorization': `Basic ${token}`,
+        },
+    });
+};

@@ -91,13 +91,13 @@ router.post('/',
                 return res.status(403).json('Forbidden');
             }
 
+            const {taskId, text} = req.body;
             const task = await Task.findOne({_id: taskId});
 
             if (!task) {
                 return res.status(404).json('Not Found');
             }
 
-            const {taskId, text, author} = req.body;
             const user = req.user;
             const comment = new Comment({taskId, text, author: user.userId});
             await comment.save();

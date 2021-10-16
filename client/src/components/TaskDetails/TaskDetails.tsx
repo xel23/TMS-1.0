@@ -15,7 +15,6 @@ import { DataContext } from '../../context';
 
 import { TASK_PRIORITIES, TASK_STATUSES, TASK_TYPES } from '../CreateTask/__mock__/data';
 
-import { comments } from './__mock__/comments';
 import { history } from './__mock__/history';
 
 import {
@@ -56,13 +55,27 @@ export interface Task {
     verifiedBy: string | null;
 }
 
-export interface TaskDetailsProps {
-    task: Task;
-    isLoaded: boolean;
-    updateTask: (summary: string, description: string, assignee: string, type: string, priority: string, subsystem: string, status: string, verifiedBy: string) => void;
+export interface Comment {
+    _id: string,
+    taskId: string,
+    text: string,
+    author: string,
+    created: Date,
+    edited: boolean | null,
 }
 
-const TaskDetails: React.FunctionComponent<TaskDetailsProps> = ({ task, isLoaded, updateTask }) => {
+export interface TaskDetailsProps {
+    task: Task;
+    comments: Comment[];
+    isLoaded: boolean;
+    isCommentUpdated: boolean;
+    updateTask: (summary: string, description: string, assignee: string, type: string, priority: string, subsystem: string, status: string, verifiedBy: string) => void;
+    createComment: (text: string) => void;
+    updateComment: (commentId: string, text: string) => void;
+    deleteComment: (commentId: string) => void;
+}
+
+const TaskDetails: React.FunctionComponent<TaskDetailsProps> = ({ task, comments, isLoaded, isCommentUpdated, updateTask, createComment, updateComment, deleteComment }) => {
     const { user: { role } } = useContext(DataContext);
 
     const [summary, setSummary] = useState<string>('');
@@ -87,6 +100,11 @@ const TaskDetails: React.FunctionComponent<TaskDetailsProps> = ({ task, isLoaded
         setStatus(task.status);
         setVerifiedBy(task.verifiedBy ? task.verifiedBy : '');
     }, [task.summary, task.description, task.assignee, task.type, task.priority, task.subsystem, task.status, task.verifiedBy]);
+
+    const addComment = () => {
+        createComment(comment);
+        setComment('');
+    };
 
     return !isLoaded ? <Loading><CircularProgress size={100} /></Loading> : (
         <Wrapper>
@@ -136,13 +154,18 @@ const TaskDetails: React.FunctionComponent<TaskDetailsProps> = ({ task, isLoaded
                                 setValue={(value) => setComment(value)}
                             />
                             <ButtonWrapper>
-                                <Button variant="contained" color="primary" disabled={comment === ''} onClick={() => {}}>
+                                <Button variant="contained" color="primary" disabled={comment === ''} onClick={addComment}>
                                     <ButtonName>Add comment</ButtonName><AddIcon fontSize="small"/>
                                 </Button>
                             </ButtonWrapper>
                         </CommentContainer>
                         <AccordionComponent title="Comments">
-                            <CommentsComponent comments={comments}/>
+                            <CommentsComponent
+                                isCommentUpdated={isCommentUpdated}
+                                comments={comments}
+                                updateComment={updateComment}
+                                deleteComment={deleteComment}
+                            />
                         </AccordionComponent>
                         <AccordionComponent title="History">
                             <HistoryComponent history={history}/>
