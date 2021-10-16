@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import StarRateIcon from '@mui/icons-material/StarRate';
 
 import { Name } from '../TaskDetails.styles';
 import { CommentItem, CommentTitle, EditableComment } from './CommentsComponent.styles';
@@ -32,13 +33,18 @@ const CommentsComponent: React.FunctionComponent<CommentsProps> = ({ isCommentUp
 
     return (
         <>
-            {comments.map(({ _id, author, created, text }) => (
+            {comments.map(({ _id, author, created, text, edited }) => (
                 <CommentItem key={_id}>
                     <CommentTitle>
                         <div>
                             <Name>{author}</Name>&nbsp;commented {moment(created).format('D MMM YYYY HH:mm')}
                         </div>
                         <div>
+                            {edited && (
+                                <Tooltip title="Comment has been edited" placement="top">
+                                    <StarRateIcon color="secondary" />
+                                </Tooltip>
+                            )}
                             <Tooltip title="Edit comment" placement="top">
                                 <EditIcon
                                     color="action"
