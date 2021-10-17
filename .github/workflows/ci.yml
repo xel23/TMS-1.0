@@ -16,10 +16,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: backend - install, start
+      - name: backend - install
         working-directory: ./server
         run: |
           npm install
-          npm start &&
-          sleep 10 &&
-          curl http://localhost:3000
