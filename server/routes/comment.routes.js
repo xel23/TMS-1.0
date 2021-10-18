@@ -100,7 +100,7 @@ router.post('/',
             }
 
             const user = req.user;
-            const comment = new Comment({taskId, text, author: user.userId});
+            const comment = new Comment({taskId, text, author: user.name});
             await comment.save();
             return res.status(201).json({comment});
         } catch (e) {
