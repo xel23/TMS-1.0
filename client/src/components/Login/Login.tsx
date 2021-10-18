@@ -58,7 +58,7 @@ const Login: React.FunctionComponent<LoginProps> = ({ login, googleLogin }) => {
                 clientId="214092743713-3le6m4idqf72f1fu8nd3hng5sosjmctk.apps.googleusercontent.com"
                 buttonText="Login with Google"
                 onSuccess={responseGoogle}
-                onFailure={responseGoogle}
+                onFailure={() => {}}
                 cookiePolicy={'single_host_origin'}
             />
         </Wrapper>
