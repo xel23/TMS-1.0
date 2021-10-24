@@ -2,6 +2,7 @@ const {Router} = require('express');
 const error = require('./services/error');
 const {check, validationResult} = require('express-validator');
 const Task = require('../models/Task');
+const History = require('../models/History');
 const auth = require('../middleware/auth.middleware');
 const abilities = require('../middleware/task.abilities');
 const router = Router();
@@ -59,16 +60,24 @@ router.post('/:id',
             }
 
             let changedSomething = false;
+            const removed = [];
+            const added = [];
             for (let key in req.body) {
+                removed.push({category: key, value: task[key]});
+                added.push({category: key, value: req.body[key]});
                 task[key] = req.body[key];
                 changedSomething = true;
             }
 
             if (changedSomething) {
-                task.updated = Date.now();
+                const timestamp = Date.now();
+                task.updated = timestamp;
                 task.updatedBy = {userId: req.user.userId, name: req.user.name};
 
                 await task.save();
+
+                const history = new History({taskId, author: req.user.name, timestamp, added, removed});
+                await history.save();
             }
 
             return res.status(201).json({task});

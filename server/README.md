@@ -286,3 +286,39 @@ Response:
     Comment
 }
 ```
+
+## History
+### History entity
+```
+{
+    taskId: string,
+    author: string,
+    timestamp: Date,
+    added: [AddedEntity],
+    removed: [RemovedEntity]
+}
+```
+
+### Added/Removed entity
+```
+{
+    category: string,
+    value: Status | Priority | Assignee | Type | Description | Summary | Subsystem | VerifiedBy
+}
+```
+
+### Get history for task
+Endpoint: `/api/history/:taskId` \
+Method: `GET` \
+Headers:
+```
+{
+    Authorization: [AuthToken]
+}
+```
+Response:
+```
+{
+    History
+}
+```

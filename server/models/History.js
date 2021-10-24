@@ -5,15 +5,8 @@ const schema = new Schema({
         type: String,
         required: true
     },
-    category: {
-        type: String,
-        required: true
-    },
     author: {
-        type: {
-            name: String,
-            userId: String
-        },
+        type: String,
         required: true
     },
     timestamp: {
