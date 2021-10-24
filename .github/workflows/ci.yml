@@ -24,4 +24,4 @@ jobs:
         working-directory: ./client
         run: |
           npm install
-          npm start
+          npm start & npx wait-on http://localhost:3000
