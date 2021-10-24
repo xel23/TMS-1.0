@@ -319,6 +319,6 @@ Headers:
 Response:
 ```
 {
-    History
+    history: History
 }
 ```
