@@ -20,3 +20,8 @@ jobs:
         working-directory: ./server
         run: |
           npm install
+      - name: frontend - install, start
+        working-directory: ./client
+        run: |
+          npm install
+          npm start
