@@ -150,3 +150,13 @@ export const deleteCommentRequest = (commentId: string, token: string) => {
         },
     });
 };
+
+export const getHistoryRequest = (taskId: string, token: string) => {
+    return axios({
+        method: 'get',
+        url: `http://localhost:3000/api/history/${taskId}`,
+        headers: {
+            'Authorization': `Basic ${token}`,
+        },
+    });
+};

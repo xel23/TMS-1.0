@@ -15,8 +15,6 @@ import { DataContext } from '../../context';
 
 import { TASK_PRIORITIES, TASK_STATUSES, TASK_TYPES } from '../CreateTask/__mock__/data';
 
-import { history } from './__mock__/history';
-
 import {
     Loading,
     Wrapper,
@@ -64,9 +62,18 @@ export interface Comment {
     edited: boolean | null,
 }
 
+export interface History {
+    taskId: string,
+    author: string,
+    timestamp: Date,
+    added: Array<{ category: string; value: string }>,
+    removed: Array<{ category: string; value: string }>,
+}
+
 export interface TaskDetailsProps {
     task: Task;
     comments: Comment[];
+    history: History[];
     isLoaded: boolean;
     isCommentUpdated: boolean;
     updateTask: (summary: string, description: string, assignee: string, type: string, priority: string, subsystem: string, status: string, verifiedBy: string) => void;
@@ -75,7 +82,7 @@ export interface TaskDetailsProps {
     deleteComment: (commentId: string) => void;
 }
 
-const TaskDetails: React.FunctionComponent<TaskDetailsProps> = ({ task, comments, isLoaded, isCommentUpdated, updateTask, createComment, updateComment, deleteComment }) => {
+const TaskDetails: React.FunctionComponent<TaskDetailsProps> = ({ task, comments, history, isLoaded, isCommentUpdated, updateTask, createComment, updateComment, deleteComment }) => {
     const { user: { role } } = useContext(DataContext);
 
     const [summary, setSummary] = useState<string>('');

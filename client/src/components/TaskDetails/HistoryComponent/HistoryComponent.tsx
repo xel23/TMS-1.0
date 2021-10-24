@@ -5,31 +5,33 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Name } from '../TaskDetails.styles';
 import { HistoryItem, HistoryTitle, HistoryData, Category } from './HistoryComponent.styles';
 
-type HistoryItemArray = {
-    category: string;
-    author: { name: string };
-    added: string;
-    removed: string;
-    timestamp: Date;
-}
+import { History } from '../TaskDetails';
 
 interface HistoryComponentProps {
-    history: HistoryItemArray[];
+    history: History[];
 }
 
 const HistoryComponent: React.FunctionComponent<HistoryComponentProps> = ({ history }) => {
+    const renderHistoryItem = ({ author, timestamp, added, removed }: History) => {
+        return (
+            <>
+                {added.map(({ category, value }, index) => (
+                    <HistoryItem key={`${author}_${index}`}>
+                        <HistoryTitle>
+                            <Name>{author}</Name>&nbsp;{moment(timestamp).format('D MMM YYYY HH:mm')}
+                        </HistoryTitle>
+                        <HistoryData>
+                            <Category>{category}</Category>:&nbsp;{removed[index].value}&nbsp;&nbsp;<ArrowForwardIcon fontSize="small" />&nbsp;&nbsp;{value}
+                        </HistoryData>
+                    </HistoryItem>
+                ))}
+            </>
+        )
+    };
+
     return (
         <>
-            {history.map((historyItem, index) => (
-                <HistoryItem key={`${historyItem.author.name}_${index}`}>
-                    <HistoryTitle>
-                        <Name>{historyItem.author.name}</Name>&nbsp;{moment(historyItem.timestamp).format('D MMM YYYY HH:mm')}
-                    </HistoryTitle>
-                    <HistoryData>
-                        <Category>{historyItem.category}</Category>:&nbsp;{historyItem.removed}&nbsp;&nbsp;<ArrowForwardIcon fontSize="small" />&nbsp;&nbsp;{historyItem.added}
-                    </HistoryData>
-                </HistoryItem>
-            ))}
+            {history.map((historyItem) => renderHistoryItem(historyItem))}
         </>
     )
 };

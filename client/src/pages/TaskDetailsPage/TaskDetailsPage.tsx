@@ -1,8 +1,8 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import TaskDetails, { Task, Comment } from '../../components/TaskDetails/TaskDetails';
-import { getTaskRequest, updateTaskRequest, getCommentsRequest, createCommentRequest, updateCommentRequest, deleteCommentRequest } from '../../requests';
+import TaskDetails, { Task, Comment, History } from '../../components/TaskDetails/TaskDetails';
+import { getTaskRequest, updateTaskRequest, getCommentsRequest, createCommentRequest, updateCommentRequest, deleteCommentRequest, getHistoryRequest } from '../../requests';
 import { DataContext } from '../../context';
 
 const TaskDetailsPage: React.FunctionComponent = () => {
@@ -23,6 +23,7 @@ const TaskDetailsPage: React.FunctionComponent = () => {
         verifiedBy: null,
     });
     const [comments, setComments] = useState<Comment[]>([]);
+    const [history, setHistory] = useState<History[]>([]);
     const [isCommentUpdated, setIsCommentUpdated] = useState<boolean>(true);
 
     const { user: { accessToken }, setNotification } = useContext(DataContext);
@@ -48,10 +49,22 @@ const TaskDetailsPage: React.FunctionComponent = () => {
             })
     };
 
+    const getHistory = () => {
+        return getHistoryRequest(taskId, accessToken)
+            .then(({ data: { history }}) => {
+                setHistory([...history]);
+            })
+            .catch((error) => {
+                setNotification({ isOpen: true, status: error.response.status, message: error.response.data.message })
+            })
+    };
+
     useEffect(() => {
         getTask().then(() => {
             getComments().then(() => {
-                setIsLoaded(true);
+                getHistory().then(() => {
+                    setIsLoaded(true);
+                })
             });
         });
     }, []);
@@ -80,6 +93,8 @@ const TaskDetailsPage: React.FunctionComponent = () => {
             .then(({ status, data: { task } }) => {
                 setTask(task);
                 setNotification({ isOpen: true, status: status, message: "Task successfully updated" });
+
+                getHistory();
             })
             .catch((error) => {
                 setTask(task);
@@ -130,6 +145,7 @@ const TaskDetailsPage: React.FunctionComponent = () => {
         <TaskDetails
             task={task}
             comments={comments}
+            history={history}
             isLoaded={isLoaded}
             isCommentUpdated={isCommentUpdated}
             updateTask={updateTask}
