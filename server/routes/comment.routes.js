@@ -23,7 +23,8 @@ router.delete('/:id',
                 return res.status(403).json('Forbidden');
             }
 
-            await Comment.deleteOne({_id: id});
+            comment.deleted = true;
+            await comment.save();
 
             return res.status(201).json({comment});
         } catch (e) {
@@ -114,7 +115,7 @@ router.get('/:taskId',
     async (req, res) => {
         try {
             const taskId = req.params.taskId;
-            const comments = await Comment.find({taskId});
+            const comments = await Comment.find({taskId, deleted: false});
             const allowedComments = comments.filter(comment => req.ability.can('read', comment));
             return res.status(200).json({comments: allowedComments});
         } catch (e) {

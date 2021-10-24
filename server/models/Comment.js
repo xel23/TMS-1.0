@@ -19,6 +19,10 @@ const schema = new Schema({
     },
     edited: {
         type: Boolean
+    },
+    deleted: {
+        type: Boolean,
+        default: false
     }
 });
 
