@@ -44,6 +44,47 @@ router.post('/:id/grant-role',
         }
     });
 
+router.post('/:id',
+    auth,
+    abilities,
+    [
+        check('name', 'Name error').isString().optional({ nullable: true }),
+        check('email', 'Email error').isEmail().optional({ nullable: true })
+    ],
+    async (req, res) => {
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                console.log(errors);
+                return res.status(400).json({
+                    errors: errors[0],
+                    message: 'Incorrect request'
+                })
+            }
+
+            if (req.params.id) {
+                const user = await User.findOne({_id: req.params.id}).select({password: 0});
+
+                if (req.ability.can('update', user)) {
+                    let changedSomething = false;
+                    for (let key in req.body) {
+                        changedSomething = true;
+                        user[key] = req.body[key];
+                    }
+                    changedSomething && await user.save();
+                    return res.status(201).json({user});
+                }
+                return res.status(403).json('Forbidden');
+            } else {
+                res.status(500).json({
+                    message: 'No user id'
+                });
+            }
+        } catch (e) {
+            error(e, res);
+        }
+    });
+
 router.get('/',
     auth,
     abilities,

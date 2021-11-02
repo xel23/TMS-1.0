@@ -231,6 +231,29 @@ Response:
 }
 ```
 
+### Update user
+Endpoint: `/api/users/:id` \
+Method: `POST` \
+Headers:
+```
+{
+    Authorization: [AuthToken]
+}
+```
+Body:
+```
+{
+    name: string | null,
+    email: string | null
+}
+```
+Response:
+```
+{
+    user: User
+}
+```
+
 ## Comments
 ### Comment entity
 ```
