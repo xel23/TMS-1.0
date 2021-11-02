@@ -174,6 +174,23 @@ Response:
 }
 ```
 
+### Search tasks
+Endpoint: `/api/tasks/` \
+Query: `search=[any RegExp]`
+Method: `GET` \
+Headers:
+```
+{
+    Authorization: [AuthToken]
+}
+```
+Response:
+```
+{
+    tasks: [Task]
+}
+```
+
 
 ## User
 ### Grant role

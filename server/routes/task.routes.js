@@ -147,7 +147,19 @@ router.get('/',
     abilities,
     async (req, res) => {
         try {
-            const tasks = await Task.find();
+            const search = req.query.search;
+            let tasks;
+            if (search) {
+                const regexp = new RegExp(search, 'i');
+                tasks = await Task.find({
+                    $or: [
+                        {summary: regexp},
+                        {description: regexp}
+                    ]
+                });
+            } else {
+                tasks = await Task.find();
+            }
             const allowedTasks = tasks.filter(task => req.ability.can('read', task));
             return res.status(200).json({tasks: allowedTasks});
         } catch (e) {
