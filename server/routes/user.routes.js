@@ -62,24 +62,33 @@ router.post('/:id',
                 })
             }
 
-            if (req.params.id) {
-                const user = await User.findOne({_id: req.params.id}).select({password: 0});
+            const user = await User.findOne({_id: req.params.id}).select({password: 0});
 
-                if (req.ability.can('update', user)) {
-                    let changedSomething = false;
-                    for (let key in req.body) {
-                        changedSomething = true;
-                        user[key] = req.body[key];
-                    }
-                    changedSomething && await user.save();
-                    return res.status(201).json({user});
+            if (req.ability.can('update', user)) {
+                let changedSomething = false;
+                for (let key in req.body) {
+                    changedSomething = true;
+                    user[key] = req.body[key];
                 }
-                return res.status(403).json('Forbidden');
-            } else {
-                res.status(500).json({
-                    message: 'No user id'
-                });
+                changedSomething && await user.save();
+                return res.status(201).json({user});
             }
+            return res.status(403).json('Forbidden');
+        } catch (e) {
+            error(e, res);
+        }
+    });
+
+router.get('/:id',
+    auth,
+    abilities,
+    async (req, res) => {
+        try {
+            const user = await User.findOne({_id: req.params.id}).select({password: 0});
+            if (req.ability.can('read', user)) {
+                return res.status(200).json({user});
+            }
+            return res.status(403).json('Forbidden');
         } catch (e) {
             error(e, res);
         }
@@ -92,7 +101,6 @@ router.get('/',
         try {
             if (req.ability.can('read', 'User')) {
                 const users = await User.find().select({email: 1, name: 1, regDate: 1, role: 1});
-                users.map
                 return res.status(200).json({users});
             }
             return res.status(403).json('Forbidden');

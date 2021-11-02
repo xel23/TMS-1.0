@@ -231,6 +231,22 @@ Response:
 }
 ```
 
+### Get user
+Endpoint: `/api/users/:id` \
+Method: `GET` \
+Headers:
+```
+{
+    Authorization: [AuthToken]
+}
+```
+Response:
+```
+{
+    user: User
+}
+```
+
 ### Update user
 Endpoint: `/api/users/:id` \
 Method: `POST` \
