@@ -44,4 +44,20 @@ router.post('/:id/grant-role',
         }
     });
 
+router.get('/',
+    auth,
+    abilities,
+    async (req, res) => {
+        try {
+            if (req.ability.can('read', 'User')) {
+                const users = await User.find().select({email: 1, name: 1, regDate: 1, role: 1});
+                users.map
+                return res.status(200).json({users});
+            }
+            return res.status(403).json('Forbidden');
+        } catch (e) {
+            error(e, res);
+        }
+    });
+
 module.exports = router;

@@ -215,6 +215,22 @@ Response:
 }
 ```
 
+### Get all users
+Endpoint: `/api/users/` \
+Method: `GET` \
+Headers:
+```
+{
+    Authorization: [AuthToken]
+}
+```
+Response:
+```
+{
+    users: [User]
+}
+```
+
 ## Comments
 ### Comment entity
 ```
