@@ -148,6 +148,14 @@ router.get('/',
     async (req, res) => {
         try {
             const search = req.query.search;
+            const filters = {
+                status: req.query.status,
+                priority: req.query.priority,
+                subsystem: req.query.subsystem,
+                assignee: req.query.assignee,
+                type: req.query.type
+            }
+
             let tasks;
             if (search) {
                 const regexp = new RegExp(search, 'i');
@@ -160,6 +168,15 @@ router.get('/',
             } else {
                 tasks = await Task.find();
             }
+
+            tasks = tasks.filter(task => {
+                for (let key in filters) {
+                    if (filters[key] && task[key] !== filters[key]) {
+                        return false;
+                    }
+                }
+                return true;
+            });
             const allowedTasks = tasks.filter(task => req.ability.can('read', task));
             return res.status(200).json({tasks: allowedTasks});
         } catch (e) {

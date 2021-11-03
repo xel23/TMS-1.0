@@ -176,7 +176,7 @@ Response:
 
 ### Search tasks
 Endpoint: `/api/tasks/` \
-Query: `search=[any RegExp]`
+Query: `search=[any RegExp]` (also supports: status, priority, subsystem, assignee, type)
 Method: `GET` \
 Headers:
 ```
