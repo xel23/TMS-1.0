@@ -9,6 +9,7 @@ export const LINKS_UNAUTHORIZED_USER: Link[] = [
 ];
 
 export const LINKS_AUTHORIZED_USER: Link[] = [
+    { linkTo: '/profile', linkName: 'User Profile' },
     { linkTo: '/tasks', linkName: 'Task List' },
 ];
 

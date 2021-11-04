@@ -170,3 +170,31 @@ export const getUsersRequest = (token: string) => {
         },
     });
 };
+
+export const getUserRequest = (userId: string, token: string) => {
+    return axios({
+        method: 'get',
+        url: `http://localhost:3000/api/users/${userId}`,
+        headers: {
+            'Authorization': `Basic ${token}`,
+        },
+    });
+};
+
+export const updateUserRequest = (
+    userId: string,
+    token: string,
+    data: {
+        name?: string | null,
+        email?: string | null
+    }) => {
+    return axios({
+        method: 'post',
+        url: `http://localhost:3000/api/users/${userId}`,
+        headers: {
+            'Authorization': `Basic ${token}`,
+            'Content-Type': 'application/json',
+        },
+        data: JSON.stringify(data),
+    });
+};

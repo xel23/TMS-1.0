@@ -21,7 +21,8 @@ import { ButtonName } from '../../pages/TasksPage/TasksPage.styles';
 import { Wrapper, ButtonWrapper, RoleIcon, IconsWrapper, UpdateIconWrapper, useSelectStyles, useTableStyles } from './UserManagement.styles';
 
 interface Role {
-    [key: string]: boolean,
+    [key: string]: boolean | string,
+    name: string,
     updateTask: boolean,
     readTask: boolean,
     createTask: boolean,
@@ -34,7 +35,9 @@ interface Role {
 
 export interface User {
     _id: string,
+    email: string,
     name: string,
+    regDate: Date,
     role: Role,
 }
 
@@ -43,6 +46,7 @@ interface UserManagementProps {
 }
 
 const initialRole: Role = {
+    name: '',
     updateTask: false,
     readTask: false,
     createTask: false,
