@@ -33,8 +33,12 @@ const App: React.FunctionComponent = () => {
                                     <Redirect to="/tasks" />)
                         }}
                     />
-                    <Route path="/register" component={() => <RegisterPage />} />
-                    <Route path="/login" component={() => <LoginPage />} />
+                    <Route path="/register">
+                        {accessToken !== '' ? <Redirect to="/tasks" /> : <RegisterPage />}
+                    </Route>
+                    <Route path="/login">
+                        {accessToken !== '' ? <Redirect to="/tasks" /> : <LoginPage />}
+                    </Route>
                     <Route exact path="/tasks">
                         {accessToken === '' ? <Redirect to="/login" /> : <TasksPage />}
                     </Route>
