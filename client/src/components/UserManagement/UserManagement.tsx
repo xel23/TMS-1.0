@@ -17,8 +17,6 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import { HEADER_TITLE } from './consts';
 
-import { users } from './__mock__/users';
-
 import { ButtonName } from '../../pages/TasksPage/TasksPage.styles';
 import { Wrapper, ButtonWrapper, RoleIcon, IconsWrapper, UpdateIconWrapper, useSelectStyles, useTableStyles } from './UserManagement.styles';
 
@@ -34,6 +32,16 @@ interface Role {
     deleteUser: boolean,
 }
 
+export interface User {
+    _id: string,
+    name: string,
+    role: Role,
+}
+
+interface UserManagementProps {
+    users: User[],
+}
+
 const initialRole: Role = {
     updateTask: false,
     readTask: false,
@@ -45,7 +53,7 @@ const initialRole: Role = {
     deleteUser: false,
 };
 
-const UserManagement: React.FunctionComponent = () => {
+const UserManagement: React.FunctionComponent<UserManagementProps> = ({ users }) => {
     const [editableUserId, setEditableUserId] = useState<string>('');
     const [editableUser, setEditableUser] = useState<Role>(initialRole);
 
@@ -91,20 +99,20 @@ const UserManagement: React.FunctionComponent = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {users.map(({ userId, name, role }) => (
-                        <TableRow key={userId}>
+                    {users.map(({ _id, name, role }) => (
+                        <TableRow key={_id}>
                             <TableCell align="left">{name}</TableCell>
-                            <TableCell align="center">{renderPermitCell(userId, 'readUser', role.readUser)}</TableCell>
-                            <TableCell align="center">{renderPermitCell(userId, 'createUser', role.createUser)}</TableCell>
-                            <TableCell align="center">{renderPermitCell(userId, 'updateUser', role.updateUser)}</TableCell>
-                            <TableCell align="center">{renderPermitCell(userId, 'deleteUser', role.deleteUser)}</TableCell>
-                            <TableCell align="center">{renderPermitCell(userId, 'readTask', role.readTask)}</TableCell>
-                            <TableCell align="center">{renderPermitCell(userId, 'createTask', role.createTask)}</TableCell>
-                            <TableCell align="center">{renderPermitCell(userId, 'updateTask', role.updateTask)}</TableCell>
-                            <TableCell align="center">{renderPermitCell(userId, 'deleteTask', role.deleteTask)}</TableCell>
+                            <TableCell align="center">{renderPermitCell(_id, 'readUser', role.readUser)}</TableCell>
+                            <TableCell align="center">{renderPermitCell(_id, 'createUser', role.createUser)}</TableCell>
+                            <TableCell align="center">{renderPermitCell(_id, 'updateUser', role.updateUser)}</TableCell>
+                            <TableCell align="center">{renderPermitCell(_id, 'deleteUser', role.deleteUser)}</TableCell>
+                            <TableCell align="center">{renderPermitCell(_id, 'readTask', role.readTask)}</TableCell>
+                            <TableCell align="center">{renderPermitCell(_id, 'createTask', role.createTask)}</TableCell>
+                            <TableCell align="center">{renderPermitCell(_id, 'updateTask', role.updateTask)}</TableCell>
+                            <TableCell align="center">{renderPermitCell(_id, 'deleteTask', role.deleteTask)}</TableCell>
                             <TableCell align="right">
                                 <IconsWrapper>
-                                    {userId === editableUserId && (
+                                    {_id === editableUserId && (
                                         <UpdateIconWrapper>
                                             <Tooltip title="Update user" placement="top">
                                                 <ArrowForwardIcon color="secondary" onClick={() =>{}} />
@@ -115,7 +123,7 @@ const UserManagement: React.FunctionComponent = () => {
                                         <EditIcon
                                             color="action"
                                             onClick={() => {
-                                                setEditableUserId((prev) => prev === userId ? '' : userId);
+                                                setEditableUserId((prev) => prev === _id ? '' : _id);
                                                 setEditableUser(role);
                                             }}
                                         />

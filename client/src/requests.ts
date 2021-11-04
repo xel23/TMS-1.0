@@ -160,3 +160,13 @@ export const getHistoryRequest = (taskId: string, token: string) => {
         },
     });
 };
+
+export const getUsersRequest = (token: string) => {
+    return axios({
+        method: 'get',
+        url: `http://localhost:3000/api/users`,
+        headers: {
+            'Authorization': `Basic ${token}`,
+        },
+    });
+};
