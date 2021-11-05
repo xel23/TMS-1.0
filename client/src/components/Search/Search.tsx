@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState, useCallback } from 'react';
 import TextField from '@mui/material/TextField';
 
 import MultiSelect from './MultiSelect/MultiSelect';
@@ -7,11 +7,48 @@ import { TASK_TYPES, TASK_PRIORITIES, TASK_STATUSES } from '../CreateTask/__mock
 
 import { Wrapper, useTextFieldStyles } from './Search.styles';
 
-const Search: React.FunctionComponent = () => {
+interface SearchProps {
+    searchTasks: (searchStr: string, types: string[], priorities: string[], statuses: string[]) => void;
+}
+
+const Search: React.FunctionComponent<SearchProps> = ({ searchTasks }) => {
     const [searchStr, setSearchStr] = useState('');
     const [types, setTypes] = useState<string[]>([]);
     const [priorities, setPriorities] = useState<string[]>([]);
     const [statuses, setStatuses] = useState<string[]>([]);
+    const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+
+    const handleSearchStrChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+
+        setSearchStr(value);
+        timer && clearTimeout(timer);
+
+        const newTimer = setTimeout(() => {
+            searchTasks(value, types, priorities, statuses);
+        }, 800);
+
+        setTimer(newTimer);
+
+        return () => {
+            timer && clearTimeout(timer);
+        }
+    }, [timer]);
+
+    const handleTypesChange = (values: string[]) => {
+        setTypes(values);
+        searchTasks(searchStr, values, priorities, statuses);
+    };
+
+    const handlePrioritiesChange = (values: string[]) => {
+        setPriorities(values);
+        searchTasks(searchStr, types, values, statuses);
+    };
+
+    const handleStatusesChange = (values: string[]) => {
+        setStatuses(values);
+        searchTasks(searchStr, types, priorities, values);
+    };
 
     const { root: textFieldRoot } = useTextFieldStyles();
 
@@ -22,25 +59,25 @@ const Search: React.FunctionComponent = () => {
                 variant="outlined"
                 placeholder="Enter text"
                 value={searchStr}
-                onChange={(event) => setSearchStr(event.target.value)}
+                onChange={handleSearchStrChange}
             />
             <MultiSelect
                 selectedValues={types}
                 options={TASK_TYPES}
                 placeholder="Choose type"
-                setSelectedValues={(values) => setTypes(values)}
+                setSelectedValues={handleTypesChange}
             />
             <MultiSelect
                 selectedValues={priorities}
                 options={TASK_PRIORITIES}
                 placeholder="Choose priority"
-                setSelectedValues={(values) => setPriorities(values)}
+                setSelectedValues={handlePrioritiesChange}
             />
             <MultiSelect
                 selectedValues={statuses}
                 options={TASK_STATUSES}
                 placeholder="Choose status"
-                setSelectedValues={(values) => setStatuses(values)}
+                setSelectedValues={handleStatusesChange}
             />
         </Wrapper>
     )

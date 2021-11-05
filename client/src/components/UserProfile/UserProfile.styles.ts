@@ -12,6 +12,7 @@ export const UserName = styled.div`
     width: 45vw;
     font-size: 32px;
     font-style: italic;
+    font-family: initial;
     margin-bottom: 10px;
 `;
 

@@ -198,3 +198,14 @@ export const updateUserRequest = (
         data: JSON.stringify(data),
     });
 };
+
+export const searchTasksRequest = (token: string, queryParams: { search?: string, type?: string, priority?: string, status?: string }) => {
+    return axios({
+        method: 'get',
+        url: `http://localhost:3000/api/tasks`,
+        headers: {
+            'Authorization': `Basic ${token}`,
+        },
+        params: queryParams,
+    });
+};
