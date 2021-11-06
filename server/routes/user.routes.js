@@ -49,7 +49,15 @@ router.post('/:id',
     abilities,
     [
         check('name', 'Name error').isString().optional({ nullable: true }),
-        check('email', 'Email error').isEmail().optional({ nullable: true })
+        check('email', 'Email error').isEmail().optional({ nullable: true }),
+        check('role', 'Role error').custom(value => {
+            for (let key in value) {
+                if (!Role.schema.paths.hasOwnProperty(key)) {
+                    throw new Error('Incorrect permission schema');
+                }
+            }
+            return true;
+        }).optional({nullable: true})
     ],
     async (req, res) => {
         try {
@@ -68,6 +76,10 @@ router.post('/:id',
                 let changedSomething = false;
                 for (let key in req.body) {
                     changedSomething = true;
+                    if (key === 'role') {
+                        user[key] = Object.assign(user[key], req.body[key]);
+                        continue;
+                    }
                     user[key] = req.body[key];
                 }
                 changedSomething && await user.save();
