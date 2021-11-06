@@ -260,7 +260,8 @@ Body:
 ```
 {
     name: string | null,
-    email: string | null
+    email: string | null,
+    role: Role | null
 }
 ```
 Response:
