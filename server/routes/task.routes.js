@@ -149,34 +149,41 @@ router.get('/',
         try {
             const search = req.query.search;
             const filters = {
-                status: req.query.status,
-                priority: req.query.priority,
-                subsystem: req.query.subsystem,
-                assignee: req.query.assignee,
-                type: req.query.type
+                status: req.query.status?.split(','),
+                priority: req.query.priority?.split(','),
+                subsystem: req.query.subsystem?.split(','),
+                assignee: req.query.assignee?.split(','),
+                type: req.query.type?.split(',')
+            }
+
+            console.log(filters);
+
+            function createFiltersForMongo(filters) {
+                const mongoFilter = {};
+                for (let key in filters) {
+                    if (filters[key]?.length > 0) {
+                        mongoFilter[key] = filters[key];
+                    }
+                }
+
+                return mongoFilter;
             }
 
             let tasks;
-            if (search) {
-                const regexp = new RegExp(search, 'i');
-                tasks = await Task.find({
-                    $or: [
-                        {summary: regexp},
-                        {description: regexp}
-                    ]
-                });
-            } else {
-                tasks = await Task.find();
-            }
 
-            tasks = tasks.filter(task => {
-                for (let key in filters) {
-                    if (filters[key] && task[key] !== filters[key]) {
-                        return false;
-                    }
-                }
-                return true;
+            const regexp = new RegExp(search, 'i');
+            tasks = await Task.find({
+                $and: [
+                    search ? {
+                        $or: [
+                            {summary: regexp},
+                            {description: regexp}
+                        ]
+                    } : {},
+                    createFiltersForMongo(filters)
+                ]
             });
+
             const allowedTasks = tasks.filter(task => req.ability.can('read', task));
             return res.status(200).json({tasks: allowedTasks});
         } catch (e) {
