@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
@@ -20,7 +20,7 @@ import { HEADER_TITLE } from './consts';
 import { ButtonName } from '../../pages/TasksPage/TasksPage.styles';
 import { Wrapper, ButtonWrapper, RoleIcon, IconsWrapper, UpdateIconWrapper, useSelectStyles, useTableStyles } from './UserManagement.styles';
 
-interface Role {
+export interface Role {
     [key: string]: boolean | string,
     name: string,
     updateTask: boolean,
@@ -43,6 +43,8 @@ export interface User {
 
 interface UserManagementProps {
     users: User[],
+    arePermissionsUpdated: boolean,
+    updateUserPermissions: (userId: string, role: Role) => void,
 }
 
 const initialRole: Role = {
@@ -57,9 +59,16 @@ const initialRole: Role = {
     deleteUser: false,
 };
 
-const UserManagement: React.FunctionComponent<UserManagementProps> = ({ users }) => {
+const UserManagement: React.FunctionComponent<UserManagementProps> = ({ users, arePermissionsUpdated, updateUserPermissions }) => {
     const [editableUserId, setEditableUserId] = useState<string>('');
     const [editableUser, setEditableUser] = useState<Role>(initialRole);
+
+    useEffect(() => {
+        if (arePermissionsUpdated) {
+            setEditableUserId('');
+            setEditableUser(initialRole);
+        }
+    }, [arePermissionsUpdated]);
 
     const { headRoot } = useTableStyles();
     const { select, icon } = useSelectStyles();
@@ -119,7 +128,12 @@ const UserManagement: React.FunctionComponent<UserManagementProps> = ({ users })
                                     {_id === editableUserId && (
                                         <UpdateIconWrapper>
                                             <Tooltip title="Update user" placement="top">
-                                                <ArrowForwardIcon color="secondary" onClick={() =>{}} />
+                                                <ArrowForwardIcon
+                                                    color="secondary"
+                                                    onClick={() => {
+                                                        updateUserPermissions(editableUserId, editableUser);
+                                                    }}
+                                                />
                                             </Tooltip>
                                         </UpdateIconWrapper>
                                     )}

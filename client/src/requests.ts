@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Role } from './components/UserManagement/UserManagement';
 
 export const registerRequest = (name: string, email: string, password: string) => {
     return axios({
@@ -186,7 +187,8 @@ export const updateUserRequest = (
     token: string,
     data: {
         name?: string | null,
-        email?: string | null
+        email?: string | null,
+        role?: Role,
     }) => {
     return axios({
         method: 'post',
