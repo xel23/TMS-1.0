@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import UserManagement, { User, Role } from '../../components/UserManagement/UserManagement';
 import { getUsersRequest, updateUserRequest } from '../../requests';

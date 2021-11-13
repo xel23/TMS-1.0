@@ -10,6 +10,7 @@ import CreateTaskPage from '../CreateTaskPage/CreateTaskPage';
 import UserManagementPage from '../UserManagementPage/UserManagementPage';
 import UserProfilePage from '../UserProfilePage/UserProfilePage';
 import Notification from '../../components/Notification/Notification';
+import ReportsPage from '../ReportsPage/ReportsPage';
 
 import { DataContext } from '../../context';
 
@@ -53,6 +54,9 @@ const App: React.FunctionComponent = () => {
                     </Route>
                     <Route path="/profile">
                         {accessToken === '' ? <Redirect to="/login" /> : <UserProfilePage />}
+                    </Route>
+                    <Route path="/reports">
+                        {accessToken === '' ? <Redirect to="/login" /> : <ReportsPage />}
                     </Route>
                 </Switch>
                 <Notification />
