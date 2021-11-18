@@ -14,6 +14,15 @@ export const RadioGroupWrapper = styled.div`
     }
 `;
 
+export const ButtonWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+`;
+
+export const ButtonName = styled.span`
+    margin: 0 8px 0 0;
+`;
+
 export const ChartWrapper = styled.div`
     display: flex;
     justify-content: center;

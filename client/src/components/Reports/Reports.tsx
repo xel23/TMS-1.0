@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import Radio from '@mui/material/Radio';
+import Button from '@mui/material/Button';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import CircularProgress from '@mui/material/CircularProgress';
+import DownloadIcon from '@mui/icons-material/Download';
 import { Chart } from 'react-google-charts';
+// @ts-ignore
+import * as html2pdf from 'html2pdf.js';
 
 import { TaskItem } from '../Task/Task';
 
-import { Wrapper, RadioGroupWrapper, ChartWrapper } from './Reports.styles';
+import { Wrapper, RadioGroupWrapper, ButtonWrapper, ButtonName, ChartWrapper } from './Reports.styles';
 import { Loading } from '../TaskDetails/TaskDetails.styles';
 
 interface ReportsProps {
@@ -142,6 +146,23 @@ const Reports: React.FunctionComponent<ReportsProps> = ({ isLoaded, tasks }) => 
         }
     };
 
+    const downloadReport = () => {
+        const element = document.getElementById('chart')!;
+        const elementToPdf = element.cloneNode(true) as HTMLElement;
+
+        elementToPdf.style.marginLeft = '-10px';
+        elementToPdf.style.marginRight = '0px';
+
+        const opt = {
+            filename:     'report.pdf',
+            image:        { type: 'jpeg', quality: 1 },
+            html2canvas:  { scale: 5 },
+            jsPDF:        { orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(elementToPdf).save();
+    };
+
     useEffect(() => {
         getReportByStatus();
     }, [tasks]);
@@ -165,21 +186,29 @@ const Reports: React.FunctionComponent<ReportsProps> = ({ isLoaded, tasks }) => 
                         <CircularProgress size={100} />
                     </Loading>
                 ) : (
-                    <ChartWrapper>
-                        <Chart
-                            width={'100%'}
-                            height={'400px'}
-                            chartType="BarChart"
-                            data={data}
-                            options={{
-                                ...options,
-                                titleTextStyle: {
-                                    fontSize: 20,
-                                },
-                                legend: 'none',
-                            }}
-                        />
-                    </ChartWrapper>
+                    <>
+                        <ChartWrapper id="chart">
+                            <Chart
+                                width={'100%'}
+                                height={'400px'}
+                                chartType="BarChart"
+                                data={data}
+                                options={{
+                                    ...options,
+                                    titleTextStyle: {
+                                        fontSize: 20,
+                                    },
+                                    hAxis: { minValue: 0 },
+                                    legend: 'none',
+                                }}
+                            />
+                        </ChartWrapper>
+                        <ButtonWrapper>
+                            <Button variant="outlined" color="primary" onClick={downloadReport}>
+                                <ButtonName>Download report</ButtonName><DownloadIcon fontSize="small"/>
+                            </Button>
+                        </ButtonWrapper>
+                    </>
                 )
             }
 
